@@ -1,0 +1,66 @@
+::ng-deep {
+    // Fix for dropdown positioning in scrollable table
+    .p-table-scrollable-body {
+      position: relative;
+      transform: none !important;
+    }
+  
+    // Scrollable dropdown styling
+    .scrollable-dropdown-panel {
+      max-height: 200px !important;
+      overflow-y: auto !important;
+      transform-origin: center bottom !important;
+      
+      .p-select-item {
+        padding: 0.75rem 1.25rem !important;
+        white-space: nowrap !important;
+      }
+    }
+  
+    // Z-index fix for dropdowns
+    .p-select-panel {
+      z-index: 1100 !important;
+      position: fixed !important;
+      transform: none !important;
+      
+      &.p-connected-overlay-enter,
+      &.p-connected-overlay-leave-to {
+        opacity: 0;
+        transform: translateY(10px) !important;
+      }
+    }
+  
+    // Ensure proper positioning context
+    body {
+      position: relative;
+    }
+  }
+  
+  // Table container adjustments
+  .p-3.surface-ground {
+    position: relative;
+    z-index: 1;
+  }
+  
+  // Status dropdown specific styling
+  .status-dropdown {
+    min-width: 150px;
+    
+    .p-select-label {
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem !important;
+    }
+  }
+
+
+  ::ng-deep .custom-checkbox.p-disabled .p-checkbox-box {
+    
+    border-color: #000000 !important;
+    opacity: 1 !important; /* override the default greyed-out look */
+  }
+  
+  ::ng-deep .custom-checkbox.p-checkbox-checked .p-checkbox-icon {
+    background-color: #4caf50 !important; /* green */
+    color: white; /* optional: white checkmark */
+  }
+  

@@ -1,0 +1,162 @@
+<!-- register-student.component.html -->
+<div class="form-container">
+    <div class="p-fluid">
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="card">
+        <div class="grid formgrid">
+          <!-- First Row -->
+          <div class="field col-12 md:col-6">
+            <label for="username">Username</label>
+            <input pInputText id="username" formControlName="username" autocomplete="off"/>
+            
+            <div *ngIf="studentForm.get('username')?.errors?.['required']" class="p-error">
+              Username is required
+            </div>
+            <div *ngIf="studentForm.get('username')?.errors?.['pattern']" class="p-error">
+              Username must not contain spaces
+            </div>
+            
+            <div *ngIf="!studentForm.get('username')?.errors?.['required']">
+              <small *ngIf="checkingUsername" class="checking-message">
+                <i class="pi pi-spinner pi-spin"></i> Checking username...
+              </small>
+              <small *ngIf="usernameAvailability && !checkingUsername" 
+                     [ngClass]="{
+                       'available-message': usernameAvailability.available,
+                       'taken-message': !usernameAvailability.available
+                     }">
+                {{ usernameAvailability.message }}
+              </small>
+            </div>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="name">Full Name</label>
+            <input pInputText id="name" formControlName="name" />
+            <small *ngIf="studentForm.get('name')?.errors?.['required']" class="p-error">
+              Name is required
+            </small>
+          </div>
+  
+          <!-- Second Row -->
+          <div class="field col-12 md:col-6">
+            <label for="rollNumber">Roll Number</label>
+            <p-inputNumber inputId="rollNumber" formControlName="rollNumber" mode="decimal" />
+            <small *ngIf="studentForm.get('rollNumber')?.errors?.['required']" class="p-error">
+              Roll number is required
+            </small>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="aadharId">Aadhar ID</label>
+            <input pInputText id="aadharId" formControlName="aadharId" />
+            <small *ngIf="studentForm.get('aadharId')?.errors?.['required']" class="p-error">
+              Aadhar ID is required
+            </small>
+            <small *ngIf="studentForm.get('aadharId')?.errors?.['pattern']" class="p-error">
+              Must be 12 or 16 digits
+            </small>
+          </div>
+  
+  
+          <div class="field col-12 md:col-6">
+            <label for="gender">Gender</label>
+            <p-dropdown [options]="genderOptions" formControlName="gender" 
+                       placeholder="Select Gender" styleClass="w-full"></p-dropdown>
+            <small *ngIf="studentForm.get('gender')?.errors?.['required']" class="p-error">
+              Gender is required
+            </small>
+          </div>
+  
+          <!-- Fourth Row -->
+          <div class="field col-12 md:col-6">
+            <label for="birthdate">Birthdate</label>
+            <p-date-picker formControlName="birthdate" [showIcon]="true" 
+                       dateFormat="dd/mm/yy" styleClass="w-full"></p-date-picker>
+            <small *ngIf="studentForm.get('birthdate')?.errors?.['required']" class="p-error">
+              Birthdate is required
+            </small>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="address">Address</label>
+            <textarea pInputTextarea formControlName="address" rows="3" class="w-full"></textarea>
+            <small *ngIf="studentForm.get('address')?.errors?.['required']" class="p-error">
+              Address is required
+            </small>
+          </div>
+  
+          <!-- Fifth Row -->
+          <div class="field col-12 md:col-6">
+            <label for="profileLink">Profile Link</label>
+            <input pInputText id="profileLink" formControlName="profileLink" />
+            <small *ngIf="studentForm.get('profileLink')?.errors?.['required']" class="p-error">
+              Profile link is required
+            </small>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="standard">Standard</label>
+            <p-dropdown [options]="standardOptions" formControlName="standard" 
+            [loading]="loadingSections" placeholder="Select Standard" optionLabel="name" (onChange)="onStdChange()">
+            </p-dropdown>
+            <small *ngIf="studentForm.get('standard')?.errors?.['required']" class="p-error">
+              Standard is required
+            </small>
+          </div>
+  
+          <!-- Sixth Row -->
+          <div class="field col-12 md:col-6">
+            <label for="section">Section</label>
+            <p-dropdown [options]="sectionOptions" formControlName="section" 
+                       [loading]="loadingSections" placeholder="Select Section">
+              
+            </p-dropdown>
+            <small *ngIf="studentForm.get('section')?.errors?.['required']" class="p-error">
+              Section is required
+            </small>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="parentsName">Parent's Name</label>
+            <input pInputText id="parentsName" formControlName="parentsName" />
+            <small *ngIf="studentForm.get('parentsName')?.errors?.['required']" class="p-error">
+              Parent's name is required
+            </small>
+          </div>
+  
+          <!-- Seventh Row -->
+          <div class="field col-12 md:col-6">
+            <label for="phoneNumber">Phone Number</label>
+            <input pInputText id="phoneNumber" formControlName="phoneNumber" />
+            <small *ngIf="studentForm.get('phoneNumber')?.errors?.['required']" class="p-error">
+              Phone number is required
+            </small>
+            <small *ngIf="studentForm.get('phoneNumber')?.errors?.['pattern']" class="p-error">
+              10 digits required
+            </small>
+          </div>
+  
+          <div class="field col-12 md:col-6">
+            <label for="email">Email</label>
+            <input pInputText id="email" formControlName="email" />
+            <small *ngIf="studentForm.get('email')?.errors?.['required']" class="p-error">
+              Email is required
+            </small>
+            <small *ngIf="studentForm.get('email')?.errors?.['email']" class="p-error">
+              Invalid email format
+            </small>
+          </div>
+  
+          <!-- Submit Button -->
+          <div class="submit-button-container">
+            <button pButton type="submit" 
+                   [label]="isSubmitting ? 'Processing...' : 'Register Student'"
+                   class="p-button-raised p-button-primary"
+                   [disabled]="isSubmitting"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <p-toast></p-toast>

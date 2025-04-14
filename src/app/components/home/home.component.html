@@ -1,0 +1,58 @@
+<!--THIS IS THE BASE COMPONENT AND EDIT IN THIS FILE WHENEVER YOU NEED TO ADD ANY ROLE AND PERMIT THOSE ROLE TO SHOW SOME FIELDS-->
+
+<div class="home-container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="menu-toggle" (click)="toggleMenu()">&#9776;</button>
+      <span class="heading">School management</span>
+      <span class="username">{{ username }}
+      <button class="logout-btn" (click)="logout()">Logout</button>
+      </span>
+    </div>
+  
+    <!-- Sidebar Menu -->
+    <div class="sidebar" [class.show]="isMenuVisible">
+      <!-- Add *ngIf conditions to each button -->
+      <button class="sidebar-btn-clickable" 
+      (click)="navigateTo('profile')" >
+      My_Profile
+      </button>
+
+      <div *ngFor="let tab of tabs">
+        <button class="sidebar-btn" (click)='toggleTab(tab)' [attr.aria-expanded]="tab.expanded">
+        {{tab.title}}
+        </button>
+        <div *ngFor="let child of tab.children">
+          <button class="sidebar-btn-child" 
+            (click)="navigateTo(child.route)" 
+            *ngIf="tab.expanded && hasPermission(child.allowedRoles)">
+            {{child.title}}
+          </button>          
+        </div>
+      </div>
+
+    </div>
+  
+    <!-- Content Area -->
+    <div class="content" [ngClass]="{'menu-open': isMenuVisible}">
+      <ng-container [ngSwitch]="selectedComponent">
+        <div *ngSwitchCase="'profile'"><app-myprofile/></div>
+        <div *ngSwitchCase="'students'"><app-all-students/></div>
+        <div *ngSwitchCase="'myPerformance'"><app-my-performance/></div>
+        <div *ngSwitchCase="'register-students'"><app-register-students/></div>
+        <div *ngSwitchCase="'editResult'"><app-marks-management/></div>
+        <div *ngSwitchCase="'teachers'"><app-teachers></app-teachers></div>
+        <div *ngSwitchCase="'editTeachers'"><app-onboard-teacher/></div>
+        <div *ngSwitchCase="'raiseEnquiry'"><app-enquiry/></div>
+        <div *ngSwitchCase="'responseEnquiry'"><app-enquiry-response/></div>
+        <div *ngSwitchCase="'cssmanagement'"><app-class-section-subject-management/></div>
+        <div *ngSwitchCase="'iCard'"><app-i-card/></div>
+        <div *ngSwitchCase="'showNotice'"><app-show-notice/></div>
+        <div *ngSwitchCase="'addNotice'"><app-add-notice/></div>
+        <div *ngSwitchCase="'markAttendance'"><app-mark-attendance/></div>
+        <div *ngSwitchCase="'extras'"><app-extras></app-extras></div>
+        <div *ngSwitchDefault></div>
+      </ng-container>
+    </div>
+  </div>
+  

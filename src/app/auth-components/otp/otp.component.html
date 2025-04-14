@@ -1,0 +1,46 @@
+
+<div class="otp-container">
+    <h2>Verify OTP</h2>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <!-- Email OTP Field -->
+      <div *ngIf="mode === 'both' || mode === 'email'" class="form-group">
+        <label for="emailOtp">Email OTP</label>
+        <input
+          id="emailOtp"
+          type="text"
+          formControlName="emailOtp"
+          placeholder="Enter 6-digit OTP from email"
+          maxlength="6"
+        />
+        <div *ngIf="otpForm.get('emailOtp')?.invalid && otpForm.get('emailOtp')?.touched" class="error">
+          Please enter a valid 6-digit OTP.
+        </div>
+      </div>
+  
+      <!-- Phone OTP Field -->
+      <div *ngIf="mode === 'both' || mode === 'phone'" class="form-group">
+        <label for="phoneOtp">Phone OTP</label>
+        <input
+          id="phoneOtp"
+          type="text"
+          formControlName="phoneOtp"
+          placeholder="Enter 6-digit OTP from phone"
+          maxlength="6"
+        />
+        <div *ngIf="otpForm.get('phoneOtp')?.invalid && otpForm.get('phoneOtp')?.touched" class="error">
+          Please enter a valid 6-digit OTP.
+        </div>
+      </div>
+      <small class="text-danger" *ngIf="isWrongOtp">
+        Wrong Otp please try again !
+      </small>
+  
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="otpForm.invalid">Submit</button>
+    </form>
+    <div class="toggle-method">
+      <button (click)="abortRegistration()" class="btn-toggle">
+        Abort registration.
+      </button>
+    </div>
+  </div>

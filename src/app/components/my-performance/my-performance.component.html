@@ -1,0 +1,56 @@
+<p-tabView>
+  <!--Tab Pannel to see my marksheet -->
+
+  <p-tabPanel header="Acedamics (Marks)">
+    <p-table [value]="groupedMarks" *ngIf="groupedMarks?.length">
+      <ng-template pTemplate="header">
+        <tr>
+          <th rowspan="2">Subject Name</th>
+          <th rowspan="2">Subject Code</th>
+          <th *ngFor="let exam of examColumns" [colSpan]="3">{{ exam }}</th>
+        </tr>
+        <tr>
+          <ng-container *ngFor="let exam of examColumns">
+            <th>Status</th>
+            <th>Max Marks</th>
+            <th>Obtained</th>
+          </ng-container>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td>{{ rowData.subjectName }}</td>
+          <td>{{ rowData.subjectCode }}</td>
+          <ng-container *ngFor="let exam of examColumns">
+            <td>{{ getExamData(rowData.exams, exam)?.status || "N/A" }}</td>
+            <td>{{ getExamData(rowData.exams, exam)?.maxMarks || "N/A" }}</td>
+            <td>
+              {{ getExamData(rowData.exams, exam)?.marksObtained || "N/A" }}
+            </td>
+          </ng-container>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+
+  <!--The Graph section to analyze self begins here-------------->
+
+  <p-tabPanel header="Analysis">
+    <div class="radar-card-container">
+      <p-chart
+        type="radar"
+        [data]="chartData"
+        [options]="chartOptions"
+        class="w-full md:w-[30rem]"
+      ></p-chart>
+    </div>
+    
+  </p-tabPanel>
+
+  <p-tabPanel header="Co-ciricular Activities"> </p-tabPanel>
+
+  <p-tabPanel header="Badges"> </p-tabPanel>
+
+  <p-tabPanel header="Career Counselling"> </p-tabPanel>
+</p-tabView>

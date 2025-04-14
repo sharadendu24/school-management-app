@@ -1,0 +1,65 @@
+<div class="profile-container">
+
+  <div class="profile-header">
+    <div class="profile-pic-wrapper">
+      <img
+        [src]="profileForm.get('profilePic')?.value"
+        alt="Profile Pic"
+        class="profile-pic"
+      />
+    </div>
+  </div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+    <div class="profile-fields">
+      <!-- Name (always read-only) -->
+      <div class="field-group">
+        <label>Name</label>
+        <input pInputText formControlName="name" readonly />
+      </div>
+      <!-- Email (always read-only) -->
+      <div class="field-group">
+        <label>Email</label>
+        <input pInputText formControlName="email" readonly />
+      </div>
+      <!-- Phone (always read only) -->
+      <div class="field-group">
+        <label>Phone</label>
+        <input pInputText formControlName="phone" readonly />
+      </div>
+      <!-- Date of Birth (always read-only) -->
+      <div class="field-group">
+        <label>Date of Birth</label>
+        <input pInputText formControlName="dob" readonly />
+      </div>
+    
+      <!-- readonly -->
+      <div class="field-group">
+        <label>Profile Picture Link</label>
+        <input
+          pInputText
+          formControlName="profilePic"
+          readonly
+        />
+      </div>
+      <!-- Gender (always read-only) -->
+      <div class="field-group">
+        <label>Gender</label>
+        <input pInputText formControlName="gender" readonly />
+      </div>
+      <!-- Address (readonly) -->
+      <div class="field-group full-width">
+        <label>Address</label>
+        <input pInputText formControlName="address" readonly />
+      </div>
+    </div>
+
+    
+  </form>
+
+  <!-- Link to update email or password -->
+  <div class="update-link">
+    <a routerLink="/update-credentials">Update Email or Password</a>
+  </div>
+</div>
+

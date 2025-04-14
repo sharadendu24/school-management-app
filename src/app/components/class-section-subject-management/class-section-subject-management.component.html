@@ -1,0 +1,170 @@
+<!-- management.component.html -->
+<p-tabView>
+  <!-- Classes Management Tab -->
+  <p-tabPanel header="Classes">
+      <div class="mb-3">
+          <button pButton type="button" label="Add Class" icon="pi pi-plus" (click)="openNewClass()"></button>
+      </div>
+      <p-table [value]="classes" [rows]="10" [paginator]="true">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Class</th>
+                  <th>Sections</th>
+                  <th>Actions</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-classItem>
+              <tr>
+                  <td>{{ classItem.name }}</td>
+                  <td>{{ classItem.sections.join(', ') }}</td>
+                  <td>
+                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text me-2"
+                            (click)="editClass(classItem)">
+                    </button>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            (click)="deleteClass(classItem)">
+                    </button>
+                </td>
+                
+              </tr>
+          </ng-template>
+      </p-table>
+
+      <p-dialog [header]="selectedClass ? 'Edit Class' : 'Add Class'" [(visible)]="classDialog" [modal]="true" 
+               [breakpoints]="{ '960px': '75vw', '640px': '90vw' }" [contentStyle]="{'overflow-y': 'auto', 'overflow-x': 'hidden', 'max-height': '100vh','min-height':'50vh'}" styleClass="p-fluid">
+          <form [formGroup]="classForm">
+              <div class="field" style="margin: 1vh">
+                  <label for="name" style="margin: 1vh">Class Name</label>
+                  <input id="name" pInputText formControlName="name" />
+              </div>
+              <div class="field" style="margin: 1vh">
+                  <label for="sections" style="margin: 1vh">Sections</label>
+                  <p-multiSelect id="sections" [options]="sectionsOptions" 
+                                formControlName="sections" placeholder="Select sections"></p-multiSelect>
+              </div>
+          </form>
+          <ng-template pTemplate="footer">
+              <button pButton type="button" label="Cancel" severity="secondary" 
+                      (click)="classDialog = false"></button>
+              <button pButton type="button" label="Save" (click)="saveClass()"></button>
+          </ng-template>
+      </p-dialog>
+  </p-tabPanel>
+
+  <!-- Subjects Management Tab -->
+  <p-tabPanel header="Subjects">
+      <div class="grid p-fluid">
+        <div class="col-4 me-3 mb-3">
+            <p-dropdown [options]="classes" 
+                        optionLabel="name"
+                        placeholder="Select Class" 
+                        [(ngModel)]="selectedClassForSubjects"
+                        (onChange)="onClassChange()">
+            </p-dropdown>
+        </div>
+            
+      </div>
+      <div *ngIf="selectedClassForSubjects">
+          <div class="mb-3">
+              <button pButton type="button" label="Add Subject" icon="pi pi-plus" (click)="openNewSubject()"></button>
+          </div>
+          <p-table [value]="subjectList" [rows]="10" [paginator]="true">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Subject Name</th>
+                      <th>Subject Code</th>
+                      <th>Actions</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-subject let-i="rowIndex">
+                  <tr>
+                      <td>{{ subject.subjectName }}</td>
+                      <td>{{ subject.subjectCode }}</td>
+                      <td>
+                          <button pButton type="button" icon="pi pi-pencil" class="mr-2" 
+                                  (click)="editSubject(subject, i)"></button>
+                          <button pButton type="button" icon="pi pi-trash" severity="danger" 
+                                  (click)="deleteSubject(i)"></button>
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+          <div class="mt-3">
+              <button pButton type="button" label="Update Subjects" (click)="updateSubjects()"></button>
+          </div>
+      </div>
+
+      <p-dialog [header]="editingSubjectIndex !== null ? 'Edit Subject' : 'Add Subject'" [(visible)]="subjectDialog" 
+               [modal]="true" [breakpoints]="{ '960px': '75vw', '640px': '90vw' }" styleClass="p-fluid">
+          <form [formGroup]="subjectForm">
+              <div class="field">
+                  <label for="subjectName">Subject Name</label>
+                  <input id="subjectName" pInputText formControlName="subjectName" />
+              </div>
+              <div class="field">
+                  <label for="subjectCode">Subject Code</label>
+                  <input id="subjectCode" pInputText formControlName="subjectCode" />
+              </div>
+          </form>
+          <ng-template pTemplate="footer">
+              <button pButton type="button" label="Cancel" severity="secondary" 
+                      (click)="subjectDialog = false"></button>
+              <button pButton type="button" label="Save" (click)="saveSubject()"></button>
+          </ng-template>
+      </p-dialog>
+  </p-tabPanel>
+
+
+
+
+  <!--Examination adding section -->
+
+
+    <p-tabPanel header="Exams">
+        
+
+        <div style="padding: 20px; max-width: 600px; margin: 0 auto">
+            <h2>Exam List</h2>
+            <ul style="list-style: none; padding: 0">
+              <li *ngFor="let exam of exams" 
+                  style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px">
+                <strong>ID:</strong> {{ exam.examId }} - <strong>Name:</strong> {{ exam.examName }}
+              </li>
+            </ul>
+      
+            <h3>Add New Exam</h3>
+            <form [formGroup]="examForm" (ngSubmit)="addExam()">
+                <div style="margin-bottom: 15px">
+                  <label style="display: block; margin-bottom: 5px; font-weight: 500" for="examName">
+                    Exam Name:
+                  </label>
+                  <input type="text" 
+                         id="examName"
+                         formControlName="examName"
+                         style="padding: 8px; width: 100%; border: 1px solid #ccc; border-radius: 4px"
+                         [class.invalid]="examForm.get('examName')?.invalid && examForm.get('examName')?.touched">
+                  
+                  <div *ngIf="examForm.get('examName')?.invalid && examForm.get('examName')?.touched"
+                       style="color: #dc3545; font-size: 0.875em; margin-top: 5px">
+                    Exam name is required
+                  </div>
+                </div>
+              
+                <button type="submit" 
+                        [disabled]="examForm.invalid"
+                        style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; 
+                               border-radius: 4px; cursor: pointer; transition: background-color 0.3s"
+                        [style.backgroundColor]="examForm.invalid ? '#cccccc' : '#4CAF50'">
+                  Add Exam
+                </button>
+              </form>
+          </div>
+
+        
+    </p-tabPanel>
+
+
+</p-tabView>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

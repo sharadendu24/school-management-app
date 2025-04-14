@@ -1,0 +1,88 @@
+
+
+
+<div class="header">
+    <div class="input-container">
+      <input 
+        type="text" 
+        [(ngModel)]="username" 
+        placeholder="Enter username"
+        class="username-input"
+        (keyup.enter)="fetchUserData()"
+      >
+      <button 
+        class="generate-button"
+        (click)="fetchUserData()"
+        [disabled]="!username.trim()"
+      >
+        Generate ICard
+      </button>
+    </div>
+  </div>
+  
+  <div class="container" *ngIf="userData && !loading">
+    <!-- Keep existing cards same -->
+  </div>
+  
+  <!-- Keep loading and error sections same -->
+
+
+
+
+<div class="container" *ngIf="userData && !loading">
+    <!-- Profile Card -->
+    <div class="card-wrapper">
+      <div [id]="'profile-card'" [class]="userData.role === 'STUDENT' ? 'student-card' : 'other-card'">
+        
+        <div class="card-content">
+          <img [src]="userData.profilePic" alt="Profile Picture" class="profile-image">
+          <div class="details">
+            <h2>{{ userData.name }}</h2>
+            <p><strong>Role:</strong> {{ userData.role }}</p>
+            <p><strong>Username:</strong> {{ userData.username }}</p>
+            <p><strong>Gender:</strong> {{ userData.gender }}</p>
+            <p><strong>DOB:</strong> {{ userData.dob | date }}</p>
+            <p><strong>Email:</strong> {{ userData.email }}</p>
+            <p><strong>Phone:</strong> {{ userData.phoneNumber }}</p>
+            
+            <div *ngIf="userData.std">
+              <p><strong>Class:</strong> {{ userData.std }}</p>
+              <p><strong>Section:</strong> {{ userData.section }}</p>
+              <p><strong>Roll No:</strong> {{ userData.rollNo }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="print-button" (click)="printCard('profile-card')">
+      <i class="pi pi-print"></i>
+    </button>
+  
+    <!-- QR Code Card -->
+    <div class="card-wrapper">
+      <div id="qrcode-card" class="qr-card">
+        
+        <div class="qr-content">
+          <h3>User Data QR Code</h3>
+          <qr-code [value]="userData | json" [size]="200" class="qr-code"></qr-code>
+          <p class="qr-note">Scan this QR code to view user details</p>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <button class="print-button" (click)="printCard('qrcode-card')">
+      <i class="pi pi-print"></i>
+    </button>
+  </div>
+  
+  <div *ngIf="loading" class="loading">
+    <i class="pi pi-spinner pi-spin"></i>
+    Loading...
+  </div>
+  
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>

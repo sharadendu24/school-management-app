@@ -1,0 +1,218 @@
+// Upload & View Results Styling
+.upload-form,
+.result-form {
+  padding: 2rem;
+  
+
+  .dropdown-row {
+    margin-bottom: 2rem;
+  }
+
+  .input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem;
+  
+    .input-row {
+      background: #fff;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.3s;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      justify-content: space-evenly ;
+
+  
+      &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+  
+      label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin: 0.25rem;
+        color: #333;
+        padding: 0.4rem 0.6rem;
+      }
+  
+      input[type='text'],
+      input[type='number'] {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 140px;
+      }
+  
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;  
+        gap: 0.5rem;
+      
+        label {
+          margin: 0;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+      }
+      
+  
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        padding: 0.4rem 0.6rem;
+      }
+  
+      .remove-button {
+        margin-left: auto;
+      }
+  
+      button.p-button-danger {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+  
+
+  // Add Button
+  .add-field-row {
+    margin-top: 2rem;
+
+    .p-button {
+      background-color: #007ad9;
+      border: none;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #005fa3;
+      }
+    }
+  }
+
+  // Submit Button
+  .p-button-raised {
+    margin-top: 1.5rem;
+    background-color: #28a745;
+    border: none;
+    padding: 0.6rem 2rem;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #218838;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// PrimeNG Table Styling
+::ng-deep {
+  .p-datatable {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+
+    .p-datatable-thead {
+      > tr {
+        > th {
+          background: #f8f9fa;
+          border: 1px solid #dee2e6 !important;
+          border-bottom-width: 2px !important;
+          color: #495057;
+          font-weight: 600;
+          padding: 1rem;
+          text-align: center;
+          
+          &:first-child {
+            border-left: none;
+          }
+          
+          &:last-child {
+            border-right: none;
+          }
+        }
+
+        &:first-child > th {
+          border-top: none;
+        }
+      }
+    }
+
+    .p-datatable-tbody {
+      > tr {
+        > td {
+          border: 1px solid #dee2e6 ;
+          padding: 0.75rem 1rem;
+          color: #495057;
+          text-align: center;
+          vertical-align: middle;
+          
+          &:first-child {
+            border-left: none;
+          }
+          
+          &:last-child {
+            border-right: none;
+          }
+        }
+
+        &:last-child > td {
+          border-bottom: none;
+        }
+
+        &:hover > td {
+          background-color: #f8f9fa;
+        }
+      }
+    }
+
+    // Nested header styling
+    tr:first-child th {
+      border-bottom: 1px solid #dee2e6 ;
+      background: #e9ecef;
+    }
+
+    tr:nth-child(2) th {
+      border-top: none ;
+      background: #f8f9fa;
+    }
+  }
+}
+
+
+// Responsive Tweaks
+@media (max-width: 768px) {
+  .input-fields .input-row .p-grid {
+    flex-direction: column;
+
+    .p-button-danger {
+      align-self: flex-start;
+    }
+  }
+
+  .add-field-row,
+  .p-button-raised {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .result-form .button-group {
+    justify-content: flex-start;
+  }
+}

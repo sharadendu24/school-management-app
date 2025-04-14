@@ -1,0 +1,161 @@
+<p-tabView>
+  <!-- Upload Marks Tab -->
+  <p-tabPanel header="Mark Attendence">
+    <!-- attendance.component.html -->
+
+    <p-select
+      [(ngModel)]="selectedStandard"
+      [options]="standardOptions"
+      optionLabel="name"
+      (onChange)="onStandardChange()"
+      placeholder="Standard"
+      class="custom-select standard-select"
+      [dropdownIcon]="'pi pi-chevron-down'"
+    ></p-select>
+
+    <p-select
+      [(ngModel)]="selectedSection"
+      [options]="sectionOptions"
+      (onChange)="onSectionChange()"
+      placeholder="Section"
+      class="custom-select section-select"
+      [dropdownIcon]="'pi pi-chevron-down'"
+    ></p-select>
+
+    <div class="p-3 surface-ground min-h-screen">
+      <p-date-picker
+        [(ngModel)]="selectedDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        class="mb-4"
+      ></p-date-picker>
+
+      <p-table
+        [value]="students"
+        [columns]="cols"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        [scrollable]="true"
+        scrollHeight="500px"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of cols">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-student>
+          <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.rollNumber }}</td>
+            <td>
+              <p-checkbox
+                [(ngModel)]="student.isPresent"
+                [binary]="true"
+              ></p-checkbox>
+            </td>
+            <td>
+              <p-select
+                *ngIf="!student.isPresent"
+                [(ngModel)]="student.status"
+                [options]="statusOptions"
+                class="status-dropdown"
+                [appendTo]="'body'"
+                [dropdownIcon]="'pi pi-chevron-down'"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="34"
+                panelStyleClass="scrollable-dropdown-panel"
+              ></p-select>
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [(ngModel)]="student.comment"
+                placeholder="Enter comments"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <p-button
+        label="Upload Attendance"
+        icon="pi pi-cloud-upload"
+        (onClick)="uploadAttendance()"
+        class="mt-4"
+      ></p-button>
+    </div>
+  </p-tabPanel>
+
+  <!-- See attendence Tab -->
+  <p-tabPanel header="Attendence">
+    <!-- attendance.component.html -->
+
+    <p-select
+      [(ngModel)]="selectedStandard"
+      [options]="standardOptions"
+      optionLabel="name"
+      (onChange)="onStandardChangeForFetch()"
+      placeholder="Standard"
+      class="custom-select standard-select"
+      [dropdownIcon]="'pi pi-chevron-down'"
+    ></p-select>
+
+    <p-select
+      [(ngModel)]="selectedSection"
+      [options]="sectionOptions"
+      (onChange)="onSectionChangeForFetch()"
+      placeholder="Section"
+      class="custom-select section-select"
+      [dropdownIcon]="'pi pi-chevron-down'"
+    ></p-select>
+
+    <div class="p-3 surface-ground min-h-screen">
+      <p-date-picker
+        [(ngModel)]="selectedDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        class="mb-4"
+      ></p-date-picker>
+
+      <p-table
+        [value]="attendences"
+        [columns]="colsForShow"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        [scrollable]="true"
+        scrollHeight="500px"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of colsForShow">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-attendence>
+          <tr>
+            <td>{{ attendence.userName }}</td>
+            <td>{{ attendence.name }}</td>
+            <td>{{ attendence.rollNumber }}</td>
+            <td>
+              <p-checkbox
+                [binary]="true"
+                [(ngModel)]="attendence.present"
+                [disabled]="true"
+                styleClass="custom-checkbox"
+              >
+              </p-checkbox>
+            </td>
+            <td>{{ attendence.status }}</td>
+            <td>{{ attendence.comment }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+
+<p-toast />

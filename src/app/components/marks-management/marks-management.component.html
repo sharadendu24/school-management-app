@@ -1,0 +1,188 @@
+<p-tabView>
+  <!-- Upload Marks Tab -->
+  <p-tabPanel header="Upload Marks">
+    <div class="upload-form">
+      <form [formGroup]="uploadForm" (ngSubmit)="uploadMarks()">
+        <!-- Dropdown Row -->
+        <div class="p-grid p-fluid dropdown-row">
+          <div class="p-field p-col-12 p-md-3">
+            <label for="exam">Select Exam</label>
+            <p-dropdown
+              inputId="exam"
+              [options]="examList"
+              optionLabel="examName"
+              formControlName="examId"
+              placeholder="Select exam"
+              [style]="{ width: '100%' }"
+            >
+            </p-dropdown>
+          </div>
+          <div class="p-field p-col-12 p-md-3">
+            <label for="subjectCode">Subject Code</label>
+            <p-dropdown
+              inputId="subjectCode"
+              [options]="subjects"
+              optionLabel="subjectCode"
+              formControlName="subjectCode"
+              placeholder="Select subject"
+              [style]="{ width: '100%' }"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+
+        <!-- Dynamic Input Fields Row -->
+        <div class="input-fields" formArrayName="markFields">
+          <div
+            class="input-row"
+            *ngFor="let field of markFields.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="p-grid p-fluid align-items-end">
+              <label for="username{{ i }}">Username</label>
+              <input
+                pInputText
+                id="username{{ i }}"
+                type="text"
+                formControlName="username"
+                placeholder="Enter username"
+              />
+
+              <label for="isPresent{{ i }}" class="p-ml-2"
+                >Mark as Present</label
+              >
+              <p-checkbox
+                [binary]="true"
+                formControlName="isPresent"
+                inputId="isPresent{{ i }}"
+              ></p-checkbox>
+
+              <label for="maxMarks{{ i }}">Max Marks</label>
+              <input
+                pInputText
+                id="maxMarks{{ i }}"
+                type="number"
+                formControlName="maxMarks"
+                placeholder="Max marks"
+              />
+
+              <label for="marksObtained{{ i }}">Obtained</label>
+              <input
+                pInputText
+                id="marksObtained{{ i }}"
+                type="number"
+                formControlName="marksObtained"
+                placeholder="Obtained"
+              />
+
+              <!-- Remove Button (only shown if more than one mark field exists) -->
+              <button
+                *ngIf="markFields.controls.length > 1"
+                pButton
+                type="button"
+                icon="pi pi-minus"
+                class="p-button-danger"
+                (click)="removeMarkField(i)"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button to Add More Input Field Groups -->
+        <div class="p-grid p-fluid add-field-row">
+          <div class="p-col-12 p-text-right">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-plus"
+              label="Add Marks Field"
+              (click)="addMarkField()"
+            ></button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="p-grid p-fluid">
+          <div class="p-col-12 p-text-center">
+            <button
+              pButton
+              type="submit"
+              label="Upload Marks"
+              class="p-button-raised"
+              [disabled]="uploadForm.invalid"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </p-tabPanel>
+
+  <!-- View Result Tab -->
+  <p-tabPanel header="View Result">
+    <div class="result-form">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="searchUsername" style="font-weight: bold; font-size: 1.2rem;">Username:</label>
+          <input
+            style="
+              margin: 2rem;
+              padding: 1rem 1.5rem;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              font-size: 1rem;
+              width: 100%;
+              max-width: 400px;
+            "
+            id="searchUsername"
+            pInputText
+            type="text"
+            [(ngModel)]="searchUsername"
+            name="searchUsername"
+            placeholder="Enter username to search"
+          />
+
+          <button
+            pButton
+            type="button"
+            class="p-button-raised"
+            label="Generate MarkSheet"
+            (click)="getMarks()"
+          ></button>
+        </div>
+      </div>
+
+      <p-table [value]="groupedMarks" *ngIf="groupedMarks?.length">
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2">Subject Name</th>
+            <th rowspan="2">Subject Code</th>
+            <th *ngFor="let exam of examColumns" [colSpan]="3">{{ exam }}</th>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let exam of examColumns">
+              <th>Status</th>
+              <th>Max Marks</th>
+              <th>Obtained</th>
+            </ng-container>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td>{{ rowData.subjectName }}</td>
+            <td>{{ rowData.subjectCode }}</td>
+            <ng-container *ngFor="let exam of examColumns">
+              <td>{{ getExamData(rowData.exams, exam)?.status || "N/A" }}</td>
+              <td>{{ getExamData(rowData.exams, exam)?.maxMarks || "N/A" }}</td>
+              <td>
+                {{ getExamData(rowData.exams, exam)?.marksObtained || "N/A" }}
+              </td>
+            </ng-container>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+
+<p-toast />

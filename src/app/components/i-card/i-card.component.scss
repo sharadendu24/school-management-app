@@ -1,0 +1,251 @@
+/* Base Styles */
+.header {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    .input-container {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+    }
+  }
+  
+  /* Input Styles */
+  .username-input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    
+    &:focus {
+      border-color: #2196F3;
+      outline: none;
+    }
+  }
+  
+  .generate-button {
+    padding: 0.8rem 2rem;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    
+    &:hover {
+      background: #1976D2;
+    }
+    
+    &:disabled {
+      background: #90caf9;
+      cursor: not-allowed;
+    }
+  }
+  
+  /* Card Container */
+  .container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Card Dimensions - Credit Card Size */
+  .card-wrapper {
+    width: 340px;  /* Standard credit card width + padding */
+    height: 480px; /* Standard credit card height + padding */
+    position: relative;
+    margin: 1rem;
+  }
+  
+  /* Base Card Styles */
+  .student-card,
+  .other-card,
+  .qr-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    position: relative;
+  }
+  
+  /* Profile Card Specific Styles */
+  .student-card { border: 5px solid #2196F3; }
+  .other-card { border: 5px solid #4CAF50; }
+  
+  .card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+    margin-top: 1rem;
+  }
+  
+  .details {
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: left;
+    
+    h2 {
+      margin: 1rem 0;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      text-align: center;
+    }
+    
+    p {
+      margin: 0.3rem 0;
+      font-size: 0.9rem;
+      color: #34495e;
+      line-height: 1.4;
+      
+      strong {
+        color: #2c3e50;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+  
+  /* QR Card Styles */
+  .qr-card {
+    border: 5px solid #673AB7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .qr-content {
+    width: 100%;
+    text-align: center;
+    
+    h3 {
+      margin: 0 0 1.5rem 0;
+      color: #2c3e50;
+      font-size: 1.2rem;
+    }
+  }
+  
+  .qr-code {
+    width: 200px !important;
+    height: 200px !important;
+    margin: 0 auto;
+  }
+  
+  .qr-note {
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  
+  /* Print Button */
+  /* Print Button - Modified to be visible */
+.print-button {
+  position: static !important; // Remove absolute positioning
+  display: block !important; // Make it a block element
+  margin: 20px auto !important; // Center horizontally with top/bottom spacing
+  width: max-content !important; // Fit content width
+  top: auto !important; // Reset positioning
+  right: auto !important; // Reset positioning
+  transform: none !important; // Remove any transforms
+  background: #2196F3 !important; // Match generate button color
+  color: white !important; // White text
+  border: none !important; // Remove border
+  padding: 12px 24px !important; // Larger padding
+  border-radius: 25px !important; // Match generate button style
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; // Add subtle shadow
+
+  &:hover {
+    background: #1976D2 !important; // Darker shade on hover
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important; // Enhanced shadow on hover
+  }
+
+  i {
+    margin-right: 8px; // Add spacing between icon and text
+  }
+}
+  
+  
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .card-wrapper {
+      width: 300px;
+      height: 440px;
+      margin: 1rem 0;
+    }
+    
+    .profile-image {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .details {
+      padding: 1rem 0;
+      
+      h2 {
+        font-size: 1.2rem;
+      }
+      
+      p {
+        font-size: 0.85rem;
+      }
+    }
+    
+    .qr-code {
+      width: 180px !important;
+      height: 180px !important;
+    }
+  }
+  
+  /* Loading and Error States */
+  .loading, .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    
+    .pi-spinner {
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .error {
+    color: #f44336;
+  }
+
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printableDiv, #printableDiv * {
+      visibility: visible;
+    }
+    #printableDiv {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }

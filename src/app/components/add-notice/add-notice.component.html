@@ -1,0 +1,66 @@
+<!-- add-notice.component.html -->
+<div class="add-notice-container">
+    
+  
+    
+      <form [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
+        <div class="p-fluid">
+          <!-- Subject Field -->
+          <div class="p-field">
+            <label for="subject">Subject</label>
+            <input pInputText id="subject" formControlName="subject" 
+                   [class.p-invalid]="submitted && f['subject'].errors"/>
+            <small *ngIf="submitted && f['subject'].errors" class="p-error">
+              Subject is required
+            </small>
+          </div>
+  
+          <!-- Content Field -->
+          <div class="p-field">
+            <label for="content">Content</label>
+            <textarea pInputTextarea id="content" formControlName="content" rows="5"
+                      [class.p-invalid]="submitted && f['content'].errors"></textarea>
+            <small *ngIf="submitted && f['content'].errors" class="p-error">
+              Content is required
+            </small>
+          </div>
+  
+          <!-- Date Picker Grid -->
+          <div class="p-grid">
+            <div class="p-col-6">
+              <div class="p-field">
+                <label for="startDate">Start Date</label>
+                <p-date-picker id="startDate" 
+                          formControlName="startDate" 
+                          [minDate]="today" 
+                          dateFormat="dd/mm/yy"
+                          [showIcon]="true"></p-date-picker>
+              </div>
+            </div>
+            <div class="p-col-6">
+              <div class="p-field">
+                <label for="endDate">End Date</label>
+                <p-date-picker id="endDate" 
+                          formControlName="endDate" 
+                          [minDate]="today" 
+                          dateFormat="dd/mm/yy"
+                          [showIcon]="true"></p-date-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Dialog Actions -->
+        <div class="dialog-actions">
+          <p-button type="button" 
+                  label="Cancel" 
+                  styleClass="p-button-text"
+                  (click)="displayAddNotice = false"></p-button>
+          <p-button type="submit" 
+                  label="Create Notice" 
+                  styleClass="p-button-primary"></p-button>
+        </div>
+      </form>
+  </div>
+
+  <p-toast></p-toast>

@@ -1,0 +1,11 @@
+<div class="notice-board-container">
+  <div class="notice-card" *ngFor="let notice of notices">
+    <h2 class="notice-subject">{{ notice.subject }}</h2>
+    <p class="notice-content">{{ notice.content }}</p>
+    <div class="notice-dates">
+      <span>📅 Published: {{ notice.createdAt | date : "mediumDate" }}</span>
+      <span>🕓 Valid till: {{ notice.endDate | date : "mediumDate" }}</span>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

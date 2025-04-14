@@ -1,0 +1,183 @@
+<!-- teacher-form.component.html -->
+<div class="form-container">
+  <div class="p-fluid">
+    <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()" class="card">
+      <div class="grid formgrid">
+        <!-- First Row -->
+        <div class="field col-12 md:col-6">
+          <label for="username">Username</label>
+          <input pInputText id="username" formControlName="username" autocomplete="off"/>
+
+          <!-- Existing required validation -->
+          <small
+            *ngIf="teacherForm.get('username')?.errors?.['required']"
+            class="p-error"
+            >Username is required</small
+          >
+
+          <!-- Username availability messages -->
+          <div *ngIf="!teacherForm.get('username')?.errors?.['required']">
+            <small *ngIf="checkingUsername" class="checking-message">
+              <i class="pi pi-spinner pi-spin"></i> Checking username...
+            </small>
+
+            <small
+              *ngIf="usernameAvailability && !checkingUsername"
+              [ngClass]="{
+                'available-message': usernameAvailability.available,
+                'taken-message': !usernameAvailability.available
+              }"
+            >
+              {{ usernameAvailability.message }}
+            </small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="name">Full Name</label>
+          <input pInputText id="name" formControlName="name" />
+          <small
+            *ngIf="teacherForm.get('name')?.errors?.['required']"
+            class="p-error"
+            >Name is required</small
+          >
+        </div>
+
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="gender">Gender</label>
+          <p-select
+            [options]="genderOptions"
+            formControlName="gender"
+            placeholder="Select Gender"
+            styleClass="w-full"
+          ></p-select>
+          <small
+            *ngIf="teacherForm.get('gender')?.errors?.['required']"
+            class="p-error"
+            >Gender is required</small
+          >
+        </div>
+
+        <!-- Second Row -->
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="birthdate">Birthdate</label>
+          <p-date-picker
+            formControlName="birthdate"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            styleClass="w-full"
+          ></p-date-picker>
+          <small
+            *ngIf="teacherForm.get('birthdate')?.errors?.['required']"
+            class="p-error"
+            >Birthdate is required</small
+          >
+        </div>
+
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="email">Email</label>
+          <input pInputText id="email" formControlName="email" />
+          <small
+            *ngIf="teacherForm.get('email')?.errors?.['required']"
+            class="p-error"
+            >Email is required</small
+          >
+          <small
+            *ngIf="teacherForm.get('email')?.errors?.['email']"
+            class="p-error"
+            >Invalid email format</small
+          >
+        </div>
+
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="phoneNumber">Phone Number</label>
+          <input pInputText id="phoneNumber" formControlName="phoneNumber" />
+          <small
+            *ngIf="teacherForm.get('phoneNumber')?.errors?.['required']"
+            class="p-error"
+            >Phone is required</small
+          >
+          <small
+            *ngIf="teacherForm.get('phoneNumber')?.errors?.['pattern']"
+            class="p-error"
+            >10 digits required</small
+          >
+        </div>
+
+        <!-- Third Row (Full Width) -->
+        <div class="field col-12">
+          <label for="address">Address</label>
+          <textarea
+            pInputTextarea
+            formControlName="address"
+            rows="3"
+            class="w-full"
+          ></textarea>
+          <small
+            *ngIf="teacherForm.get('address')?.errors?.['required']"
+            class="p-error"
+            >Address is required</small
+          >
+        </div>
+
+        <!-- Fourth Row -->
+        <div class="field col-12 md:col-8">
+          <label for="subjects">Subjects</label>
+          <p-multiSelect
+            [options]="subjects"
+            formControlName="subjectIds"
+            optionLabel="name"
+            optionValue="id"
+            class="w-full"
+          ></p-multiSelect>
+        </div>
+
+        <div class="field col-12 md:col-2">
+          <label for="expInMonths">Total Experience</label>
+          <p-inputNumber
+            inputId="expInMonths"
+            formControlName="expInMonths"
+            mode="decimal"
+            [showButtons]="true"
+            class="w-full"
+          ></p-inputNumber>
+        </div>
+
+        <div class="field col-12 md:col-2">
+          <label for="expInRelSubjectInMonths">Subject Experience</label>
+          <p-inputNumber
+            inputId="expInRelSubjectInMonths"
+            formControlName="expInRelSubjectInMonths"
+            mode="decimal"
+            [showButtons]="true"
+            class="w-full"
+          ></p-inputNumber>
+        </div>
+
+        <div class="field col-12 md:col-6 lg:col-4">
+          <label for="profileLink">Picture Link</label>
+          <input pInputText id="profileLink" formControlName="profileLink" />
+          <small
+            *ngIf="teacherForm.get('profileLink')?.errors?.['required']"
+            class="p-error"
+            >Picture Link is required</small
+          >
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-button-container">
+          <button
+            pButton
+            type="submit"
+            [label]="
+              isSubmitting ? 'Processing...' : teacherData ? 'Update' : 'Onboard'
+            "
+            class="p-button-raised p-button-primary"
+            [disabled]="isSubmitting"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<p-toast></p-toast>

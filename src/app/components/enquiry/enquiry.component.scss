@@ -1,0 +1,72 @@
+.enquiry-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  padding-bottom: 80px; // Space for input container
+  justify-content: space-between;
+
+  ::ng-deep .p-scrollpanel {
+    height: 100%;
+
+    .p-scrollpanel-wrapper {
+      height: 100%;
+
+      .p-scrollpanel-content {
+        padding-right: 12px;
+      }
+    }
+  }
+}
+
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
+  z-index: 1000;
+  padding: 1rem;
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      flex: 1; // Takes remaining space
+    }
+
+    button {
+      flex-shrink: 0; // Prevents button from shrinking
+    }
+  }
+}
+
+.enquiry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.question-section {
+  background-color: #e9ecef;
+  border-left: 4px solid var(--primary-color);
+  padding: 4px;
+}
+
+.answer-section {
+  background-color: #f8f9fa;
+  border-left: 4px solid #22c55e;
+  padding: 4px;
+}
+
+// Adjust scroll panel height accounting for header and input container
+::ng-deep .p-scrollpanel {
+  [style] {
+    height: calc(100vh - 160px) !important; // Adjust this value based on your needs
+  }
+}

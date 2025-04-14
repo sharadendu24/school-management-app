@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="filter-section p-fluid">
+      <div class="p-grid">
+        <div class="p-col-12 p-md-6">
+          <p-dropdown [options]="standards" [(ngModel)]="selectedStandard" 
+                     placeholder="Select Standard" [showClear]="true"
+                     optionLabel="name" class="w-full"
+                     (onChange)="onStandardChange()"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6">
+          <p-dropdown [options]="sections" [(ngModel)]="selectedSection" 
+                     placeholder="Select Section" [showClear]="true"
+                     class="w-full"
+                     [disabled]="!selectedStandard"
+                     (onChange)="onSectionChange()"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="loading" class="p-grid p-justify-center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  
+    <div *ngIf="errorMessage" class="p-grid p-justify-center">
+      <p-message severity="error" [text]="errorMessage"></p-message>
+    </div>
+  
+    <div class="enquiries-container p-grid">
+      <div *ngFor="let enquiry of enquiries" class="p-col-12 p-md-6 p-lg-4">
+        <p-card [header]="enquiry.question" 
+               [ngClass]="{'selected-enquiry': selectedEnquiry === enquiry}"
+               (click)="toggleSelection(enquiry)"
+               [class.expanded]="selectedEnquiry === enquiry">
+          <div class="enquiry-content">
+            <div class="meta-info">
+              <small class="text-muted">
+                Raised by: {{enquiry.raisedBy}}
+                <span *ngIf="enquiry.raisedOn"> | {{enquiry.raisedOn | date:'mediumDate'}}</span>
+              </small>
+            </div>
+  
+            <div *ngIf="selectedEnquiry === enquiry" class="response-section">
+              <textarea pInputTextarea [(ngModel)]="enquiry.answer" 
+                       placeholder="Type your answer..." rows="3"
+                       (click)="$event.stopPropagation()"></textarea>
+              <div class="p-grid p-mt-2">
+                <div class="p-col">
+                  <button pButton label="Respond" 
+                          class="p-button-primary w-full"
+                          (click)="submitResponse(enquiry)"> Reply </button>
+                </div>
+              </div>
+            </div>
+  
+            <div *ngIf="enquiry.answeredOn" class="existing-response p-mt-2">
+              <p-divider></p-divider>
+              <div class="answer-section">
+                <h4>Current Response:</h4>
+                <p>{{enquiry.answer}}</p>
+                <small class="text-muted">
+                  Answered by {{enquiry.answeredBy}} 
+                  <span *ngIf="enquiry.answeredOn"> | {{enquiry.answeredOn | date:'mediumDate'}}</span>
+                </small>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  
+    <div *ngIf="enquiries.length === 0 && !loading" class="p-grid p-justify-center">
+      <p-message severity="info" text="No unanswered enquiries found"></p-message>
+    </div>
+  </div>
+
+  <p-toast />

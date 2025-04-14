@@ -1,0 +1,64 @@
+<div class="login-container">
+    <div class="login-form">
+      <h2>{{ isEmailLogin ? 'Sign In with Email' : 'Sign In with Username' }}</h2>
+      
+      <form (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <label *ngIf="!isEmailLogin" for="username">Username</label>
+          <label *ngIf="isEmailLogin" for="email">Email</label>
+          
+          <input
+            type="text"
+            id="username"
+            *ngIf="!isEmailLogin"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            *ngIf="isEmailLogin"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+  
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+  
+        <div *ngIf="errorMessage" class="error-message">
+          <p>{{ errorMessage }}</p>
+        </div>
+  
+        <button type="submit" class="btn-submit">Sign In</button>
+      </form>
+  
+      <div class="toggle-method">
+        <button (click)="toggleLoginMethod()" class="btn-toggle">
+          {{ isEmailLogin ? 'Use Username instead' : 'Use Email instead' }}
+        </button>
+      </div>
+  
+      <div class="forgot-password">
+        <a href="#">Forgot your password?</a>
+      </div>
+    </div>
+  </div>
+
+  <app-change-password *ngIf="showNewPasswordDialogue" useCase="confirmSignUp" />
+
+  
+  

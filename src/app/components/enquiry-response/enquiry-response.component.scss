@@ -1,0 +1,154 @@
+// Color Variables
+$primary-color: #007bff !default;
+$secondary-color: #6c757d !default;
+$background-color: #f8f9fa !default;
+$card-background: #ffffff !default;
+$border-color: #dee2e6 !default;
+$text-color: #343a40 !default;
+$highlight-color: #17a2b8 !default;
+$accent-color: #ffc107 !default;
+
+// Main container styling
+.container {
+  padding: 2rem;
+  background-color: $background-color;
+  color: $text-color;
+  font-family: "Georgia", serif;
+  min-height: 100vh;
+
+  .filter-section {
+    background: lighten($primary-color, 45%);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .p-dropdown {
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 1px solid lighten($primary-color, 30%);
+      background: $card-background;
+
+      &:hover {
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  // Enquiries container
+  .enquiries-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    // Card styling
+    ::ng-deep .p-card {
+      background: linear-gradient(to bottom, $card-background, lighten($card-background, 5%));
+      border: 1px solid lighten($border-color, 10%);
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: visible;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: $accent-color;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        border-color: $primary-color;
+      }
+
+      &.expanded {
+        border-left: 4px solid $highlight-color;
+        background: linear-gradient(to bottom, lighten($highlight-color, 45%), $card-background);
+      }
+
+      .p-card-title {
+        color: $text-color;
+        font-weight: 600;
+      }
+
+      .p-card-content {
+        .meta-info {
+          font-size: 0.85rem;
+          color: $secondary-color;
+          margin-bottom: 1rem;
+        }
+
+        .response-section {
+          margin-top: 1.5rem;
+
+          textarea {
+            width: 100%;
+            border: 2px solid lighten($border-color, 5%);
+            border-radius: 5px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+
+            &:focus {
+              border-color: $primary-color;
+              outline: none;
+              box-shadow: 0 0 0 3px rgba($primary-color, 0.25);
+            }
+          }
+        }
+
+        .existing-response {
+          background: lighten($secondary-color, 48%);
+          padding: 1rem;
+          border-radius: 5px;
+          border-left: 3px solid $secondary-color;
+          margin-top: 1.5rem;
+
+          h4 {
+            color: darken($text-color, 10%);
+            margin-bottom: 0.75rem;
+          }
+        }
+      }
+    }
+
+    .selected-enquiry {
+      background: lighten($highlight-color, 42%);
+      border-color: $highlight-color;
+    }
+  }
+
+  // Button styling
+  ::ng-deep .p-button {
+    &-primary {
+      background-color: $primary-color;
+      border: 1px solid darken($primary-color, 5%);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 8%);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  // Messages
+  ::ng-deep .p-message {
+    &-error {
+      background: lighten(#dc3545, 40%);
+      border-color: #dc3545;
+    }
+
+    &-info {
+      background: lighten($primary-color, 40%);
+      border-color: $primary-color;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<!-- enquiry-raising.component.html -->
+<div class="enquiry-container p-p-3">
+    <p-scrollPanel [style]="{height: 'calc(100vh - 120px)', width: '100%'}">
+      <div class="p-m-2">
+        <p-card *ngFor="let enquiry of enquiries" class="p-mb-3">
+          <ng-template pTemplate="header">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <span class="p-text-bold">Enquiry No. #{{enquiry.id}}</span>
+              <span class="p-text-sm">{{enquiry.raisedOn | date:'medium'}}</span>
+            </div>
+          </ng-template>
+          
+          <div class="p-d-flex p-flex-column p-gap-2">
+            <div class="question-section p-p-3 p-card">
+              <label class="p-text-sm p-text-secondary">Your Question:</label>
+              <p class="p-mt-1 p-mb-0">{{enquiry.question}}</p>
+            </div>
+  
+            <div *ngIf="enquiry.answer" class="answer-section p-p-3 p-card">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                <label class="p-text-sm p-text-secondary">Admin Response:</label>
+                <span class="p-text-sm">{{enquiry.answeredOn | date:'medium'}}</span>
+              </div>
+              <p class="p-mt-1 p-mb-0">{{enquiry.answer}}</p>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </p-scrollPanel>
+  
+    <div class="input-container p-p-3 p-shadow-5">
+      <form (ngSubmit)="submitEnquiry()" class="p-d-flex p-gap-2">
+        <input 
+          pInputText 
+          type="text"
+          [(ngModel)]="newQuestion"
+          name="newQuestion"
+          placeholder="Type your enquiry here..." 
+          style="width: 100%"
+        />
+        <button 
+          pButton 
+          type="submit" 
+          icon="pi pi-send" 
+          [disabled]="!newQuestion.trim()"
+          class="p-button-primary"
+        ></button>
+      </form>
+    </div>
+  </div>
+  <p-toast></p-toast>

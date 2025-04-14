@@ -1,0 +1,113 @@
+<div class="register-container">
+    <div class="register-form">
+      <h2>Register</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Name -->
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" type="text" placeholder="Enter your name" required />
+        </div>
+
+        <!--password-->
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input id="password" formControlName="password" type="password" placeholder="Enter password." required />
+        </div>
+        <div *ngIf="registerForm.get('password')?.errors">
+          <small class="text-danger" *ngIf="registerForm.get('password')?.hasError('required')">
+            Password is required.
+          </small>
+          <small class="text-danger" *ngIf="registerForm.get('password')?.hasError('pattern')">
+            Password must be at least 8 characters long and include:
+            <ul>
+              <li>1 uppercase letter</li>
+              <li>1 lowercase letter</li>
+              <li>1 digit</li>
+              <li>1 special character (!#$%^&*)</li>
+            </ul>
+          </small>
+        </div>
+        
+        <!-- Gender -->
+        <div class="form-field">
+          <label for="gender">Gender</label>
+          <select id="gender" formControlName="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+  
+        <!-- Birthdate -->
+        <div class="form-field">
+          <label for="birthdate">Date Of Birth</label>
+          <input id="birthdate" formControlName="birthdate" type="date" required />
+        </div>
+  
+        <!-- Address -->
+        <div class="form-field">
+          <label for="address">Address</label>
+          <input id="address" formControlName="address" type="text" placeholder="Enter your address" required />
+        </div>
+  
+        <!-- Email -->
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" placeholder="Enter your email" required />
+        </div>
+  
+        <!-- Phone Number -->
+        <div class="form-field">
+          <label for="phone_number">Phone Number</label>
+          <input id="phone_number" formControlName="phone_number" type="text" placeholder="Enter your phone number" required />
+        </div>
+
+
+        <!-- UserName -->
+        <div class="form-field">
+          <label for="username">Username</label>
+          <input id="username" formControlName="username" type="text" placeholder="Enter a username which is available." required />
+        </div>
+
+        <div *ngIf="registerForm.get('username')?.errors">
+          <small class="text-danger" *ngIf="registerForm.get('username')?.hasError('required')">
+            Username is required.
+          </small>
+          <small class="text-danger" *ngIf="registerForm.get('username')?.hasError('pattern')">
+            Username cannot contain spaces.
+          </small>
+          <small class="text-danger" *ngIf="usernameExists">
+            Username already esists.
+          </small>
+        </div>
+  
+        <!--
+        <div class="otp-fields">
+          <div class="form-field" >
+            <label for="emailOTP">Email OTP</label>
+            <input id="emailOTP" formControlName="emailOTP" type="text" placeholder="Enter OTP for Email" />
+          </div>
+          <div class="form-field">
+            <label for="phoneOTP">Phone OTP</label>
+            <input id="phoneOTP" formControlName="phoneOTP" type="text" placeholder="Enter OTP for Phone" />
+          </div>
+        </div> -->
+  
+        <!-- Picture -->
+        <div class="form-field">
+          <label for="picture">Profile Picture Link</label>
+          <input id="picture" formControlName="picture" type="text" placeholder="Please paste the link of your pic after uploading it to drive and publically accessible." />
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="!registerForm.valid">Register</button>
+        </div>
+      </form>
+    </div>
+
+   
+    <app-otp *ngIf="showOtpModal" [mode]="'email'"></app-otp>
+
+  </div>
+  
