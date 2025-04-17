@@ -28,7 +28,9 @@ import { ICardComponent } from "../i-card/i-card.component";
 import { ShowNoticeComponent } from "../show-notice/show-notice.component";
 import { AddNoticeComponent } from "../add-notice/add-notice.component";
 import { MarkAttendanceComponent } from "../mark-attendance/mark-attendance.component";
+import { MenuModule } from 'primeng/menu';
 import { MyPerformanceComponent } from "../my-performance/my-performance.component";
+import { ChangePasswordComponent } from "../../auth-components/change-password/change-password.component";
 
 @Component({
   selector: 'app-home',
@@ -54,16 +56,37 @@ import { MyPerformanceComponent } from "../my-performance/my-performance.compone
     ShowNoticeComponent,
     AddNoticeComponent,
     MarkAttendanceComponent,
-    MyPerformanceComponent
+    MenuModule,
+    MyPerformanceComponent,
+    ChangePasswordComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  
   username: string = '';
   isMenuVisible: boolean = false;
   selectedComponent: string = 'profile';
   groups:string[]=[];
+  showChangePasswordDialog:boolean=false;
+
+
+  menuItems: any[] = [
+    {
+      label: 'Change Password',
+      icon: 'pi pi-key',
+      command: () => this.openChangePasswordDialog()
+    },
+    {
+      separator: true
+    },
+    {
+      label: 'Logout',
+      icon: 'pi pi-sign-out',
+      command: () => this.logout()
+    }
+  ];
 
   constructor(
     private readonly cognitoService: CognitoService,
@@ -132,4 +155,10 @@ filteredTabs: any[] = [];
       this.cognitoService.signOut();
     }
   }
+
+  openChangePasswordDialog() {
+    this.showChangePasswordDialog = true;
+  }
+
+
 }

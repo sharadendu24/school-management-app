@@ -70,7 +70,9 @@ export class LoginComponent {
     }
   }
 
-
+  clearErrorMessage() {
+    this.errorMessage = '';
+  }
 
 
 }
