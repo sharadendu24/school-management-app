@@ -8,6 +8,8 @@ import {
   signIn,
   signOut,
   signUp,
+  resetPassword,
+  confirmResetPassword
 } from 'aws-amplify/auth';
 import { Router } from '@angular/router';
 import { cognito } from '../constants/constants';
@@ -184,6 +186,36 @@ export class CognitoService {
   async checkUsernameAvailability(username: string): Promise<boolean> {
     return false;
   }
+
+public async forgotPassword(username: string): Promise<void> {
+  try {
+    const data = await resetPassword({username});
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+  
+    /**
+    * This method is used to confirm the password reset for a user.
+    * @param username - The username of the user.
+    * @param newPassword - The new password for the user.
+    * @param confirmationCode - The confirmation code sent to the user's email or phone.
+    */
+public async forgotPasswordSubmit(
+  username: string,
+  newPassword: string,
+  confirmationCode: string
+): Promise<void> {
+  try {
+    const data = await confirmResetPassword({username, newPassword, confirmationCode});
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
 
   public getUser() {}
 

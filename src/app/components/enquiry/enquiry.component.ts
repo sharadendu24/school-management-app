@@ -10,6 +10,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { baseUrl } from '../../constants/urls';
 
 @Component({
   selector: 'app-enquiry',
@@ -43,7 +44,7 @@ export class EnquiryComponent {
   }
 
   fetchMyEnquiry() {
-    this.http.get<ResponseTo<any[]>>('http://localhost:8080/enquiry/raisedByMe')
+    this.http.get<ResponseTo<any[]>>(`${baseUrl}enquiry/raisedByMe`)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -67,7 +68,7 @@ export class EnquiryComponent {
     if (!this.newQuestion.trim()) return;
 
     const encodedQuestion = encodeURIComponent(this.newQuestion.trim());
-    const apiUrl = `http://localhost:8080/enquiry/raise?question=${encodedQuestion}`;
+    const apiUrl = `${baseUrl}enquiry/raise?question=${encodedQuestion}`;
 
     this.http.post(apiUrl, {}, { withCredentials: true }).subscribe({
       next: () => {
