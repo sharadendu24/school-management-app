@@ -9,7 +9,8 @@ import {
   signOut,
   signUp,
   resetPassword,
-  confirmResetPassword
+  confirmResetPassword,
+  updatePassword
 } from 'aws-amplify/auth';
 import { Router } from '@angular/router';
 import { cognito } from '../constants/constants';
@@ -215,8 +216,33 @@ public async forgotPasswordSubmit(
   }
 }
 
+public async changePassword(oldPassword: string, newPassword: string): Promise<any> {
+  try {
+    await updatePassword({
+      oldPassword,
+      newPassword
+    });
+    console.log('Password changed successfully');
+    this.signOut();
+    // You might want to add a success notification or redirect here
+  } catch (error) {
+    console.error('Error changing password:', error);
+    
+    // Handle specific error cases
+    if (error instanceof Error) {
+      if (error.name === 'NotAuthorizedException') {
+        throw new Error('Current password is incorrect');
+      }
+      if (error.name === 'InvalidPasswordException') {
+        throw new Error('New password does not meet complexity requirements');
+      }
+    }
+    
+    throw new Error('Failed to change password. Please try again.');
+  }
 
 
+}
   public getUser() {}
 
   public updateUser(user: any) {}

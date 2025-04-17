@@ -1,5 +1,5 @@
 // change-password.component.ts
-import { Component, Input, NgModule } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CognitoService } from '../../service/cognito.service';
 import { NgIf } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',
@@ -19,11 +20,15 @@ import { NgIf } from '@angular/common';
 })
 export class ChangePasswordComponent {
   @Input() useCase: 'changePassword' | 'confirmSignUp' = 'changePassword';
+  @Output() closed = new EventEmitter<boolean>();
   registerForm: FormGroup;
   showOtpModal = false;
   otpMode: 'both' | 'phone' | 'email' = 'both';
   emailOtp = '';
   usernameExists = false;
+  errorMessage = '';
+  private destroyed$ = new Subject<void>();
+
 
   constructor(
     private readonly fb: FormBuilder,
@@ -31,6 +36,7 @@ export class ChangePasswordComponent {
   ) {
     this.registerForm = this.fb.group(
       {
+        currentPassword: [],
         password: [
           '',
           [
@@ -52,6 +58,12 @@ export class ChangePasswordComponent {
       },
       { validators: this.passwordsMatchValidator }
     );
+
+    this.registerForm.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        this.errorMessage = '';
+      });
   }
 
   async onSubmit(): Promise<any> {
@@ -70,9 +82,15 @@ export class ChangePasswordComponent {
   }
   
 
-  changePassword() {
-    //have to implement it later.
+async changePassword() {
+  try {
+    await this.cognitoService.changePassword(this.registerForm.get('currentPassword')?.value, this.registerForm.get('password')?.value);
+
+  } catch (error) {
+    this.errorMessage = (error as { message?: string })?.message || 'An error occurred while changing the password.';
+    console.error(this.errorMessage);
   }
+}
 
   private passwordsMatchValidator(
     formGroup: AbstractControl
@@ -80,5 +98,16 @@ export class ChangePasswordComponent {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+
+  closeDialog(){
+    this.closed.emit(true);
+  }
+
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

@@ -5,9 +5,25 @@
     <div class="top-bar">
       <button class="menu-toggle" (click)="toggleMenu()">&#9776;</button>
       <span class="heading">School management</span>
-      <span class="username">{{ username }}
-      <button class="logout-btn" (click)="logout()">Logout</button>
-      </span>
+      <div class="user-menu-container">
+        <button 
+          type="button" 
+          class="username-btn p-button-text p-button-plain"
+          (click)="menu.toggle($event)"
+          #menuButton
+        >
+          <i class="pi pi-user" style="margin-right: 8px;"></i>
+          {{ username }}
+          <i class="pi pi-chevron-down" style="margin-left: 8px;"></i>
+        </button>
+        <p-menu 
+          #menu
+          [popup]="true"
+          [model]="menuItems"
+          appendTo="body"
+          styleClass="user-dropdown-menu"
+        ></p-menu>
+      </div>
     </div>
   
     <!-- Sidebar Menu -->
@@ -56,3 +72,6 @@
     </div>
   </div>
   
+
+  <app-change-password
+    [useCase]="'changePassword'" *ngIf="showChangePasswordDialog" (closed)="showChangePasswordDialog = false"></app-change-password>
