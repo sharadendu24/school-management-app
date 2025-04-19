@@ -2,7 +2,6 @@
 .upload-form,
 .result-form {
   padding: 2rem;
-  
 
   .dropdown-row {
     margin-bottom: 2rem;
@@ -13,7 +12,7 @@
     flex-direction: column;
     gap: 1rem;
     margin: 1rem;
-  
+
     .input-row {
       background: #fff;
       border: 1px solid #dcdcdc;
@@ -25,13 +24,12 @@
       flex-direction: row;
       align-items: center;
       gap: 1rem;
-      justify-content: space-evenly ;
+      justify-content: space-evenly;
 
-  
       &:hover {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       }
-  
+
       label {
         font-weight: 600;
         font-size: 0.85rem;
@@ -39,7 +37,7 @@
         color: #333;
         padding: 0.4rem 0.6rem;
       }
-  
+
       input[type='text'],
       input[type='number'] {
         padding: 0.4rem 0.6rem;
@@ -48,37 +46,35 @@
         border-radius: 4px;
         width: 140px;
       }
-  
+
       .checkbox-group {
         display: flex;
         align-items: center;
-        justify-content: center;  
+        justify-content: center;
         gap: 0.5rem;
-      
+
         label {
           margin: 0;
           font-weight: 500;
           white-space: nowrap;
         }
       }
-      
-  
+
       .form-field {
         display: flex;
         flex-direction: column;
         padding: 0.4rem 0.6rem;
       }
-  
+
       .remove-button {
         margin-left: auto;
       }
-  
+
       button.p-button-danger {
         padding: 0.5rem 0.75rem;
       }
     }
   }
-  
 
   // Add Button
   .add-field-row {
@@ -128,6 +124,11 @@
     overflow: hidden;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
 
+    // Wrap table in scroll container for mobile
+    .p-datatable-wrapper {
+      overflow-x: auto;
+    }
+
     .p-datatable-thead {
       > tr {
         > th {
@@ -139,80 +140,74 @@
           padding: 1rem;
           text-align: center;
           
-          &:first-child {
-            border-left: none;
-          }
-          
-          &:last-child {
-            border-right: none;
-          }
+          &:first-child { border-left: none; }
+          &:last-child { border-right: none; }
         }
-
-        &:first-child > th {
-          border-top: none;
-        }
+        &:first-child > th { border-top: none; }
       }
     }
 
     .p-datatable-tbody {
       > tr {
         > td {
-          border: 1px solid #dee2e6 ;
+          border: 1px solid #dee2e6;
           padding: 0.75rem 1rem;
           color: #495057;
           text-align: center;
           vertical-align: middle;
-          
-          &:first-child {
-            border-left: none;
-          }
-          
-          &:last-child {
-            border-right: none;
-          }
-        }
 
-        &:last-child > td {
-          border-bottom: none;
+          &:first-child { border-left: none; }
+          &:last-child { border-right: none; }
         }
-
-        &:hover > td {
-          background-color: #f8f9fa;
-        }
+        &:last-child > td { border-bottom: none; }
+        &:hover > td { background-color: #f8f9fa; }
       }
     }
 
-    // Nested header styling
     tr:first-child th {
-      border-bottom: 1px solid #dee2e6 ;
+      border-bottom: 1px solid #dee2e6;
       background: #e9ecef;
     }
-
     tr:nth-child(2) th {
-      border-top: none ;
+      border-top: none;
       background: #f8f9fa;
     }
   }
 }
 
-
-// Responsive Tweaks
+// Responsive Tweaks (Mobile & Tablet)
 @media (max-width: 768px) {
-  .input-fields .input-row .p-grid {
-    flex-direction: column;
-
-    .p-button-danger {
-      align-self: flex-start;
-    }
+  .upload-form,
+  .result-form {
+    padding: 1.5rem;                   /* Reduce padding on tablet */ 
   }
 
-  .add-field-row,
+  .input-fields .input-row {
+    flex-direction: column;            /* Stack fields vertically */
+    align-items: stretch;
+  }
+
+  .input-fields .input-row label,
+  .input-fields .input-row input[type='text'],
+  .input-fields .input-row input[type='number'] {
+    width: 100%;                       /* Full-width inputs */
+  }
+
+  .add-field-row .p-button,
   .p-button-raised {
+    width: 100%;                       /* Full-width buttons */
     text-align: center;
-    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .upload-form,
+  .result-form {
+    padding: 1rem;                     /* Further reduce on small phones */
   }
 
-  .result-form .button-group {
-    justify-content: flex-start;
+  .chat-messages,
+  .p-datatable-wrapper {
+    padding: 0 0.5rem;                 /* Give breathing room for scroll */
   }
 }

@@ -75,3 +75,10 @@
 
   <app-change-password
     [useCase]="'changePassword'" *ngIf="showChangePasswordDialog" (closed)="showChangePasswordDialog = false"></app-change-password>
+
+    <!-- parent.component.html -->
+<app-lesson-chat 
+*ngIf="showLessonChat"
+(close)="showLessonChat = false"
+>
+</app-lesson-chat>

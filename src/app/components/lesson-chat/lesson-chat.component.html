@@ -1,0 +1,30 @@
+<!-- lesson-chat.component.html -->
+<div class="chat-overlay">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h3></h3>
+        <h3>AI Powered Assistant</h3>
+        <button pButton icon="pi pi-times" class="p-button-text close-btn" 
+                (click)="close.emit()"></button>
+      </div>
+  
+      <p-scrollPanel class="chat-messages">
+        <div *ngFor="let msg of messages" class="message-bubble" 
+             [ngClass]="{'user': msg.isUser, 'error': msg.isError}">
+          <div class="message-time">{{ msg.timestamp | date:'shortTime' }}</div>
+          <div [innerHTML]="formatContent(msg.text)"></div>
+        </div>
+        <div *ngIf="loading" class="loading-indicator">
+          <i class="pi pi-spin pi-spinner"></i> Generating response...
+        </div>
+      </p-scrollPanel>
+  
+      <div class="chat-input">
+        <input type="text" pInputText [(ngModel)]="userMessage" 
+               placeholder="Type your question..." (keyup.enter)="sendMessage()">
+        <button pButton icon="pi pi-send" class="p-button-primary" 
+                [disabled]="!userMessage.trim() || loading" 
+                (click)="sendMessage()"></button>
+      </div>
+    </div>
+  </div>
