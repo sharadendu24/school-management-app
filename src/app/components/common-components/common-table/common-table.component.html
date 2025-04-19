@@ -1,22 +1,16 @@
+<!-- common-table.component.html -->
 <p-table
   #dt
   [value]="data"
-  [(selection)]="selectedData"
-  dataKey="id"
-  [rowHover]="true"
-  [rows]="10"
-  [showCurrentPageReport]="true"
-  [rowsPerPageOptions]="[10, 25, 50]"
-  [loading]="loading"
+  [lazy]="true"
+  (onLazyLoad)="loadData($event)"
+  [rows]="tableProperties.rows || 10"
+  [totalRecords]="tableProperties.totalRecords"
   [paginator]="true"
+  [loading]="loading"
+  [rowsPerPageOptions]="[10, 25, 50, 100]"
+  [showCurrentPageReport]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-  [filterDelay]="0"
-  [globalFilterFields]="[
-    'name',
-    'country.name',
-    'representative.name',
-    'status'
-  ]"
 >
   <ng-template #caption>
     <div class="flex justify-between">
@@ -24,42 +18,75 @@
         [outlined]="true"
         icon="pi pi-filter-slash"
         label="Clear"
-        (click)="clear()"
+        (click)="clearFilters()"
       />
       <p-iconField iconPosition="left">
         <p-inputIcon>
           <i class="pi pi-search"></i>
         </p-inputIcon>
-        <input pInputText type="text" placeholder="Keyboard Search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Search"
+          (input)="onGlobalSearch($event)"
+        />
       </p-iconField>
     </div>
   </ng-template>
+
   <ng-template #header>
     <tr>
-      <th pSortableColumn="name" style="min-width: 14rem" *ngFor="let column of columns">
+      <th
+        *ngFor="let column of columns"
+        [pSortableColumn]="column.sortable ? column.key : ''"
+      >
         <div class="flex justify-between items-center">
-          {{column.value}}
-          <p-sortIcon field="name" />
+          {{ column.value }}
+          <p-sortIcon *ngIf="column.sortable" [field]="column.key"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="name"
-            display="menu"
-            class="ml-auto"
-          />
+            *ngIf="column.filterable && column.filterType === 'menu'"
+            [field]="column.key"
+            [display]="'menu'"
+          ></p-columnFilter>
+          <div>
+          <p-dropdown
+            *ngIf="column.filterable && column.filterType === 'dropdown'"
+            class="filter‑funnel"
+            [options]="column.filterOptions"
+            [optionLabel]="column.filterOptionLabel ?? null"
+            [optionValue]="column.filterOptionValue ?? null"
+            (onChange)="onColumnFilter($event, column)"
+            [showClear]="true"
+            appendTo="body"
+          >
+          </p-dropdown>
+
+          <p-multiSelect
+            *ngIf="column.filterable && column.filterType === 'multiselect'"
+            class="filter‑funnel"
+            [options]="column.filterOptions"
+            [optionLabel]="column.filterOptionLabel || 'label'"
+            (onChange)="onColumnFilter($event, column)"
+            [showClear]="true"
+          >
+          </p-multiSelect>
+        </div>
         </div>
       </th>
     </tr>
   </ng-template>
-  <ng-template #body let-singleData>
-    <tr class="p-selectable-row">
+
+  <ng-template #body let-rowData>
+    <tr>
       <td *ngFor="let column of columns">
-        {{ singleData[column.key] }}
+        {{ rowData[column.key] }}
       </td>
     </tr>
   </ng-template>
+
   <ng-template #emptymessage>
     <tr>
-      <td colspan="8">No customers found.</td>
+      <td [attr.colspan]="columns.length">No records found</td>
     </tr>
   </ng-template>
 </p-table>

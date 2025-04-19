@@ -27,13 +27,30 @@
   }
 
   .heading {
-    font-size: 36px;
     font-weight: bolder;
     color: whitesmoke;
     font-family: "Times New Roman", Times, serif;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-      1px 1px 0 #000;
+    text-shadow:
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+  
+    // mobile first
+    font-size: 1.5rem;
+  
+    // tablets & small PCs
+    @media (min-width: 600px) {
+      font-size: 1.75rem;
+    }
+  
+    // large desktops
+    @media (min-width: 1024px) {
+      font-size: 2rem;
+    }
   }
+  
+  
 
   .logout-btn {
     background-color: rgb(231, 68, 19);

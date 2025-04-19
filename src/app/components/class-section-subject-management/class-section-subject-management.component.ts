@@ -81,10 +81,9 @@ export class ClassSectionSubjectManagementComponent implements OnInit {
 
   availableSections: any[] = [];
 
+  exams: any[] = [];
 
-  exams:any[] =[];
-
-  examForm:FormGroup;
+  examForm: FormGroup;
 
   // API Base URL (adjust as necessary)
   baseUrl2: string = baseUrl + 'standard';
@@ -430,19 +429,13 @@ export class ClassSectionSubjectManagementComponent implements OnInit {
     }
   }
 
+  /**Exam related issues begins here................................ */
 
+  getExams() {
+    const url = `${baseUrl}exam/`;
 
-
-
-
-
-
-/**Exam related issues begins here................................ */
-
-getExams(){
-  const url = `${baseUrl}exam/`;
-  
-    this.http.get<any>(url)
+    this.http
+      .get<any>(url)
       .pipe(
         finalize(() => {
           // Any cleanup logic can go here
@@ -450,51 +443,41 @@ getExams(){
       )
       .subscribe({
         next: (response) => {
-          console.log("Response of get Exam is ", response);
-          this.exams=response.data;
-
+          console.log('Response of get Exam is ', response);
+          this.exams = response.data;
         },
         error: (error) => {
-
-            console.log("The error inside adding Exam is ", error);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: error.error.errors[0]?.errorMessage || 'Failed to add exam. Please try again.',
-              life: 7000
-            });
+          console.log('The error inside adding Exam is ', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              error.error.errors[0]?.errorMessage ||
+              'Failed to add exam. Please try again.',
+            life: 7000,
+          });
           console.error('API Error:', error);
-          
+
           // Optional: Handle specific error cases
           if (error.status === 409) {
             this.messageService.add({
               severity: 'warn',
               summary: 'Conflict',
               detail: 'Exam already exists',
-              life: 7000
+              life: 7000,
             });
           }
-        }
+        },
       });
-    }
-
-
-
-
-
-
-
-
-
-
-
+  }
 
   addExam() {
     const url = `${baseUrl}exam/`;
-    let params=new HttpParams;
-    params=params.append("examName",this.examForm.value.examName);
-  
-    this.http.post<any>(url, params)
+    let params = new HttpParams();
+    params = params.append('examName', this.examForm.value.examName);
+
+    this.http
+      .post<any>(url, params)
       .pipe(
         finalize(() => {
           // Any cleanup logic can go here
@@ -506,32 +489,34 @@ getExams(){
             severity: 'success',
             summary: 'Success',
             detail: 'Exam added successfully!',
-            life: 5000
+            life: 5000,
           });
+          this.getExams();
           // Update local state if needed
-
         },
         error: (error) => {
-
-            console.log("The error inside adding Exam is ", error);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: error.error.errors[0]?.errorMessage || 'Failed to add exam. Please try again.',
-              life: 7000
-            });
+          console.log('The error inside adding Exam is ', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              error.error.errors[0]?.errorMessage ||
+              'Failed to add exam. Please try again.',
+            life: 7000,
+          });
           console.error('API Error:', error);
-          
+
           // Optional: Handle specific error cases
           if (error.status === 409) {
             this.messageService.add({
               severity: 'warn',
               summary: 'Conflict',
               detail: 'Exam already exists',
-              life: 7000
+              life: 7000,
             });
           }
-        }
+        },
       });
-    }
+    
+  }
 }

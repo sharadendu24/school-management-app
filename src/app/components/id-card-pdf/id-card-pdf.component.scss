@@ -1,0 +1,96 @@
+/* id-card-pdf.component.scss */
+.pdf-container {
+    position: absolute;
+    left: -9999px;
+    width: 108mm; /* 2 × 54mm */
+    height: 86mm;
+  
+    .pdf-page {
+      width: 54mm;  /* Credit card width */
+      height: 86mm; /* Credit card height */
+      float: left;
+      padding: 2mm;
+      background: white;
+      box-sizing: border-box;
+      position: relative;
+
+      
+  
+      &.profile-page {
+        border: 1mm solid #2196F3;
+        border-radius: 3mm;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      }
+  
+      &.qr-page {
+        border: 1mm solid #673AB7;
+        border-radius: 3mm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  
+    .profile-img {
+      width: 15mm;
+      height: 15mm;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 2mm auto;
+      display: block;
+      border: 0.5mm solid #eee;
+    }
+  
+    .details {
+      h2 {
+        font-size: 4mm;
+        margin: 1mm 0 2mm;
+        text-align: center;
+        color: #2c3e50;
+      }
+  
+      .detail-row {
+        display: flex;
+        margin: 1mm 0;
+        line-height: 1.2;
+  
+        .label {
+          flex: 0 0 18mm;
+          font-weight: 500;
+          color: #2c3e50;
+          font-size: 3mm;
+        }
+  
+        .value {
+          flex: 1;
+          color: #34495e;
+          font-size: 3mm;
+          word-break: break-word;
+        }
+      }
+    }
+  
+    .qr-content {
+      text-align: center;
+      padding: 2mm;
+  
+      h3 {
+        font-size: 4mm;
+        margin: 0 0 3mm;
+        color: #2c3e50;
+      }
+  
+      .qrcode {
+        width: 30mm !important;
+        height: 30mm !important;
+        margin: 0 auto;
+      }
+  
+      .qr-note {
+        font-size: 3mm;
+        color: #7f8c8d;
+        margin-top: 3mm;
+      }
+    }
+  }

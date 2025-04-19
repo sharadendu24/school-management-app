@@ -86,3 +86,5 @@
   <div *ngIf="error" class="error">
     {{ error }}
   </div>
+
+  <app-id-card-pdf [userData]="userData" #pdfComponent *ngIf="showPDFPrint"></app-id-card-pdf>

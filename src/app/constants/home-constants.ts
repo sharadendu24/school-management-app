@@ -6,8 +6,8 @@ export const tabs=[
       title: 'Students',
       expanded: false,
       children: [
-        { title: 'All_Students', route: 'students', allowedRoles: ['SUPERADMIN', 'MANAGER', 'PRINCIPAL', 'CONTROLLER', 'TEACHER', 'STUDENT'] },
-        { title: 'Register_Students', route: 'register-students', allowedRoles: ['PRINCIPAL', 'CONTROLLER', 'TEACHER'] },
+        { title: 'All Students', route: 'students', allowedRoles: ['SUPERADMIN', 'MANAGER', 'PRINCIPAL', 'CONTROLLER', 'TEACHER', 'STUDENT'] },
+        { title: 'Register Students', route: 'register-students', allowedRoles: ['PRINCIPAL', 'CONTROLLER', 'TEACHER'] },
         { title: 'Notice', route: 'showNotice', allowedRoles: ['SUPERADMIN', 'MANAGER', 'PRINCIPAL', 'CONTROLLER', 'TEACHER', 'STUDENT'] },
         {title: 'My Performance', route:"myPerformance", allowedRoles: ['SUPERADMIN', 'STUDENT']}
       
