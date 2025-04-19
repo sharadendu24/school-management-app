@@ -1,10 +1,20 @@
-:host ::ng-deep {
-    .p-progressbar {
-        height: .5rem;
-        background-color: #D8DADC;
+/* common-table.component.scss */
 
-        .p-progressbar-value {
-            background-color: #607D8B;
-        }
-    }
+/* 1. Allow header flex items to wrap onto two lines */
+:host ::ng-deep th .flex.justify-between.items-center {
+  display: flex !important;
+  flex-wrap: wrap;    /* enable wrapping */ 
+  align-items: center;/* vertical centering of first-line icons */ 
 }
+
+/* 2. Force dropdown + multiselect to full width and wrap */
+:host ::ng-deep th .filter‑funnel,
+:host ::ng-deep th p-multiSelect {
+  display: flex;          /* create a flex context for centering */ 
+  flex: 0 0 100%;         /* no grow/shrink, full-width flex-basis */ 
+  max-width: 100%;
+  justify-content: center;/* center horizontally within their line */ 
+  align-items: center;    /* center vertically within their line */ 
+  margin-top: 0.5rem;     /* spacing from the label row */ 
+}
+

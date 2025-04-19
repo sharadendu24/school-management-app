@@ -27,6 +27,8 @@
     "aws-amplify": "^6.12.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "jwt-decode": "^4.0.0",
     "ng-qrcode": "^19.0.1",
     "ngx-print": "^2.0.0",
