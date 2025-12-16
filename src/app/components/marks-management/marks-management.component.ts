@@ -84,7 +84,11 @@ export class MarksManagementComponent implements OnInit {
       username: ['', Validators.required],
       marksObtained: [null, [ Validators.min(0)]],
       maxMarks: [null, [Validators.min(0)]],
-      isPresent: [true]
+      isPresent: [true],
+      name:['', Validators.required],
+      standard:['', Validators.required],
+      section:['', Validators.required],
+      rollNumber:['', Validators.required],
     });
   }
 
@@ -178,7 +182,11 @@ export class MarksManagementComponent implements OnInit {
         username: [mark.username, Validators.required],
         maxMarks: [mark.maxMarks, ],
         marksObtained: [mark.marksObtained],
-        isPresent: [mark.isPresent ?? mark.marksObtained !== null]
+        isPresent: [mark.isPresent ?? mark.marksObtained !== null],
+        name: [mark.name, Validators.required],
+        standard: [mark.standard, Validators.required],
+        section: [mark.section, Validators.required],
+        rollNumber: [mark.rollNumber, Validators.required],
       }));
     });
 

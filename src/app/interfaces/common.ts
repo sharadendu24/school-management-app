@@ -55,6 +55,10 @@ export interface Enquiry {
     isPassed: boolean;
     isDeleted: boolean;
     isPresent?: boolean; // Optional field for attendance
+    name?: string; // Optional field for student name
+    rollNo?: number; // Optional field for student roll number
+    standard?: string; // Optional field for student standard
+    section?: string; // Optional field for student section
   }
 
 

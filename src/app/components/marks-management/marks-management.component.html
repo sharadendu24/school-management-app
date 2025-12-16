@@ -39,17 +39,50 @@
             [formGroupName]="i"
           >
             <div class="p-grid p-fluid align-items-end">
-              <label for="username{{ i }}">Username</label>
+              <label for="username{{ i }}">User:</label>
               <input
                 pInputText
                 id="username{{ i }}"
                 type="text"
                 formControlName="username"
                 placeholder="Enter username"
+                readonly="true"
+              />
+              <label for="name{{ i }}">Name</label>
+              <input
+                pInputText
+                id="name{{ i }}"
+                type="text"
+                formControlName="name"
+                readonly="true"
+              />
+              <label for="standard{{ i }}">Std:</label>
+              <input
+                pInputText
+                id="standard{{ i }}"
+                type="text"
+                formControlName="standard"
+                readonly="true"
+              />
+              <label for="section{{ i }}">Sec:</label>
+              <input
+                pInputText
+                id="section{{ i }}"
+                type="text"
+                formControlName="section"
+                readonly
+              />
+              <label for="rollNumber{{ i }}">R.No.:</label>
+              <input
+                pInputText
+                id="rollNumber{{ i }}"
+                type="number"
+                formControlName="rollNumber"
+                readonly="true"
               />
 
               <label for="isPresent{{ i }}" class="p-ml-2"
-                >Mark as Present</label
+                >Present</label
               >
               <p-checkbox
                 [binary]="true"

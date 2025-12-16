@@ -1,108 +1,107 @@
-// Upload & View Results Styling
+// styles.scss
+
+// 1. Sass color definitions
+$primary-color: #2c3e50;
+$secondary-color: #ecf0f1;
+$accent-color: #3498db;
+$accent-color-light: lighten($accent-color, 10%);
+$text-color: #333;
+$border-radius: 0.5rem;
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+$font-family: 'Helvetica Neue', Arial, sans-serif;
+
+:root {
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --accent-color: #{$accent-color};
+  --accent-color-light: #{$accent-color-light};
+  --text-color: #{$text-color};
+  --border-radius: #{$border-radius};
+  --box-shadow: #{$box-shadow};
+  --font-family: #{$font-family};
+}
+
+// PrimeNG overrides
+@layer primeng.extensions {
+  .p-tabview {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .p-tabview-nav {
+    background-color: var(--accent-color);
+    .p-tabview-nav-item {
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      margin-right: 0.5rem;
+      &:hover {
+        background-color: var(--accent-color-light);
+      }
+      &.p-highlight {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+      }
+    }
+  }
+  .p-tabview-panels {
+    padding: 1.5rem;
+  }
+}
+
+// Global styles
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+}
+
+// Form containers
 .upload-form,
 .result-form {
-  padding: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin: 1rem;
 
   .dropdown-row {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .input-fields {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin: 1rem;
-
-    .input-row {
-      background: #fff;
-      border: 1px solid #dcdcdc;
-      border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      transition: box-shadow 0.3s;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-      justify-content: space-evenly;
-
-      &:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      }
-
-      label {
-        font-weight: 600;
-        font-size: 0.85rem;
-        margin: 0.25rem;
-        color: #333;
-        padding: 0.4rem 0.6rem;
-      }
-
-      input[type='text'],
-      input[type='number'] {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.9rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        width: 140px;
-      }
-
-      .checkbox-group {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-
-        label {
-          margin: 0;
-          font-weight: 500;
-          white-space: nowrap;
-        }
-      }
-
-      .form-field {
-        display: flex;
-        flex-direction: column;
-        padding: 0.4rem 0.6rem;
-      }
-
-      .remove-button {
-        margin-left: auto;
-      }
-
-      button.p-button-danger {
-        padding: 0.5rem 0.75rem;
-      }
-    }
+    margin: 1rem 0;
   }
 
   // Add Button
   .add-field-row {
-    margin-top: 2rem;
-
+    margin-top: 1.5rem;
     .p-button {
-      background-color: #007ad9;
+      background-color: var(--accent-color);
       border: none;
       color: white;
       padding: 0.5rem 1.2rem;
-      border-radius: 6px;
+      border-radius: var(--border-radius);
       transition: background-color 0.3s;
+      width: auto;
 
       &:hover {
-        background-color: #005fa3;
+        background-color: var(--accent-color-light);
       }
     }
   }
 
   // Submit Button
   .p-button-raised {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     background-color: #28a745;
     border: none;
     padding: 0.6rem 2rem;
     color: white;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     transition: background-color 0.3s;
 
     &:hover {
@@ -116,86 +115,148 @@
   }
 }
 
+// Dynamic input rows
+.input-row {
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin: 0.25rem;
+    color: var(--text-color);
+    padding: 0.4rem 0.6rem;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 6rem;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+      margin: 0;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .remove-button {
+    margin-left: auto;
+  }
+
+  button.p-button-danger {
+    padding: 0.5rem 0.75rem;
+    margin-left: 1.5rem;
+    border-radius: .5rem;
+  }
+}
+
 // PrimeNG Table Styling
 ::ng-deep {
   .p-datatable {
     border: 1px solid #dee2e6 !important;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
 
-    // Wrap table in scroll container for mobile
     .p-datatable-wrapper {
       overflow-x: auto;
+      padding: 0.5rem 0;
     }
 
-    .p-datatable-thead {
-      > tr {
-        > th {
-          background: #f8f9fa;
-          border: 1px solid #dee2e6 !important;
-          border-bottom-width: 2px !important;
-          color: #495057;
-          font-weight: 600;
-          padding: 1rem;
-          text-align: center;
-          
-          &:first-child { border-left: none; }
-          &:last-child { border-right: none; }
-        }
-        &:first-child > th { border-top: none; }
-      }
-    }
-
-    .p-datatable-tbody {
-      > tr {
-        > td {
-          border: 1px solid #dee2e6;
-          padding: 0.75rem 1rem;
-          color: #495057;
-          text-align: center;
-          vertical-align: middle;
-
-          &:first-child { border-left: none; }
-          &:last-child { border-right: none; }
-        }
-        &:last-child > td { border-bottom: none; }
-        &:hover > td { background-color: #f8f9fa; }
-      }
-    }
-
-    tr:first-child th {
-      border-bottom: 1px solid #dee2e6;
-      background: #e9ecef;
-    }
-    tr:nth-child(2) th {
-      border-top: none;
+    .p-datatable-thead > tr > th {
       background: #f8f9fa;
+      border: 1px solid #dee2e6 !important;
+      border-bottom-width: 2px !important;
+      color: #495057;
+      font-weight: 600;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .p-datatable-tbody > tr > td {
+      border: 1px solid #dee2e6;
+      padding: 0.5rem;
+      color: #495057;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .p-datatable-tbody > tr:nth-child(even) > td {
+      background-color: #f8f9fa;
+    }
+
+    .p-datatable-tbody > tr:hover > td {
+      background-color: #e9ecef;
     }
   }
 }
 
-// Responsive Tweaks (Mobile & Tablet)
+// Toast notifications
+.p-toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1100;
+}
+
+// Responsive Breakpoints
 @media (max-width: 768px) {
   .upload-form,
   .result-form {
-    padding: 1.5rem;                   /* Reduce padding on tablet */ 
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .dropdown-row {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .input-fields .input-row {
-    flex-direction: column;            /* Stack fields vertically */
+    flex-direction: column;
     align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.75rem;
   }
 
-  .input-fields .input-row label,
-  .input-fields .input-row input[type='text'],
-  .input-fields .input-row input[type='number'] {
-    width: 100%;                       /* Full-width inputs */
+  .input-row input[type='text'],
+  .input-row input[type='number'],
+  .input-row .form-field {
+    width: 100%;
   }
 
   .add-field-row .p-button,
   .p-button-raised {
-    width: 100%;                       /* Full-width buttons */
+    width: 100%;
     text-align: center;
   }
 }
@@ -203,11 +264,11 @@
 @media (max-width: 576px) {
   .upload-form,
   .result-form {
-    padding: 1rem;                     /* Further reduce on small phones */
+    margin: 0.25rem;
+    padding: 0.75rem;
   }
 
-  .chat-messages,
   .p-datatable-wrapper {
-    padding: 0 0.5rem;                 /* Give breathing room for scroll */
+    padding: 0 0.25rem;
   }
 }
