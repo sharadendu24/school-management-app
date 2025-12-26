@@ -31,6 +31,7 @@ import { MarkAttendanceComponent } from "../mark-attendance/mark-attendance.comp
 import { MenuModule } from 'primeng/menu';
 import { MyPerformanceComponent } from "../my-performance/my-performance.component";
 import { ChangePasswordComponent } from "../../auth-components/change-password/change-password.component";
+import { LessonChatComponent } from "../lesson-chat/lesson-chat.component";
 
 @Component({
   selector: 'app-home',
@@ -58,7 +59,8 @@ import { ChangePasswordComponent } from "../../auth-components/change-password/c
     MarkAttendanceComponent,
     MenuModule,
     MyPerformanceComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    LessonChatComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -74,6 +76,14 @@ export class HomeComponent {
 
   menuItems: any[] = [
     {
+      label: 'My Assistant',
+      icon: 'pi pi-microchip-ai',
+      command: () => this.openLessonChat()
+    },
+    {
+      separator: true
+    },
+    {
       label: 'Change Password',
       icon: 'pi pi-key',
       command: () => this.openChangePasswordDialog()
@@ -87,6 +97,8 @@ export class HomeComponent {
       command: () => this.logout()
     }
   ];
+
+  showLessonChat: boolean = false;
 
   constructor(
     private readonly cognitoService: CognitoService,
@@ -158,6 +170,10 @@ filteredTabs: any[] = [];
 
   openChangePasswordDialog() {
     this.showChangePasswordDialog = true;
+  }
+
+  openLessonChat() {
+    this.showLessonChat = true;
   }
 
 

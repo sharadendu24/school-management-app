@@ -131,7 +131,13 @@ export class MarkAttendanceComponent {
           this.attendences = res.data;
           console.log(this.attendences);
         },
-        error: (err) => this.showError('Failed to fetch students'),
+        error: (err) =>{
+          this.showError('Failed to fetch students');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error while fetching students.',});
+        }
       });
   }
 

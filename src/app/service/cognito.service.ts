@@ -188,10 +188,11 @@ export class CognitoService {
     return false;
   }
 
-public async forgotPassword(username: string): Promise<void> {
+public async forgotPassword(username: string): Promise<any> {
   try {
-    const data = await resetPassword({username});
-    console.log(data);
+    const data = await resetPassword({username: username});
+    console.log('Password reset initiated:', data);
+    return data;
   } catch (err) {
     console.log(err);
   }
@@ -224,11 +225,9 @@ public async changePassword(oldPassword: string, newPassword: string): Promise<a
     });
     console.log('Password changed successfully');
     this.signOut();
-    // You might want to add a success notification or redirect here
   } catch (error) {
     console.error('Error changing password:', error);
     
-    // Handle specific error cases
     if (error instanceof Error) {
       if (error.name === 'NotAuthorizedException') {
         throw new Error('Current password is incorrect');

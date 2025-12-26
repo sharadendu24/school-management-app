@@ -1,4 +1,9 @@
+<!-- all-students.component.html -->
+<app-common-table 
+  [data]="students"
+  [columns]="columns"
+  [tableProperties]="tableProps"
+  (eventEmitter)="handleTableEvent($event)"
+></app-common-table>
 
-<app-common-table [data]="data" [columns]="columns" [tableProperties]="tableProperties"></app-common-table>
-
-
+<p-toast></p-toast>

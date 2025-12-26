@@ -1,13 +1,16 @@
 /* Container for the entire student registration form */
+/* Base container: fluid width with a comfortable max */
 .form-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #f8f9fa; // Light background
+  width: 90%;              /* Fill 90% of viewport width */
+  max-width: 900px;        /* But don’t grow past 900px on desktop */
+  margin: 20px auto;       /* Vertical spacing + centered */
+  padding: 20px;           /* Inner breathing room */
+  background-color: #f8f9fa;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
+
 
 /* Card styling for the form */
 .card {
@@ -105,15 +108,19 @@ button[pButton] {
   text-align: center;
   margin-top: 2rem;
 }
-
-/* Responsive adjustments */
+/* Tighter spacing on small screens */
 @media (max-width: 768px) {
   .form-container {
-    padding: 1rem;
-    margin: 20px;
+    width: 100%;           /* Use full width */
+    margin: 10px 0;        /* Only vertical margins */
+    padding: 10px;         /* Less inner padding */
   }
+
   .grid.formgrid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;           /* Smaller gaps between fields */
+  }
+
+  .submit-button-container {
+    margin-top: 1rem;      /* Reduce top margin */
   }
 }

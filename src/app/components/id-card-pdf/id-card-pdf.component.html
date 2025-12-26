@@ -1,0 +1,58 @@
+<!-- id-card-pdf.component.html -->
+<div #idCardContainer class="pdf-container">
+    <!-- Profile Page (Portrait) -->
+    <div class="pdf-page profile-page">
+      <div class="card-content">
+        <img [src]="userData.profilePic" alt="Profile" class="profile-img">
+        <div class="details">
+          <h2>{{ userData.name }}</h2>
+          <div class="detail-row">
+            <span class="label">Role:</span>
+            <span class="value">{{ userData.role }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Username:</span>
+            <span class="value">{{ userData.username }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Gender:</span>
+            <span class="value">{{ userData.gender }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">DOB:</span>
+            <span class="value">{{ userData.dob | date }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Email:</span>
+            <span class="value">{{ userData.email }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Phone:</span>
+            <span class="value">{{ userData.phoneNumber }}</span>
+          </div>         
+          <div class="detail-row" *ngIf="userData.role==='STUDENT'">
+            <span class="label">Standard:</span>
+            <span class="value">{{ userData.std }}</span>
+          </div>
+          <div class="detail-row" *ngIf="userData.role==='STUDENT'">
+            <span class="label">Section:</span>
+            <span class="value">{{ userData.section }}</span>
+          </div>
+          <div class="detail-row" *ngIf="userData.role==='STUDENT'">
+            <span class="label">Roll No.:</span>
+            <span class="value">{{ userData.rollNo }}</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  
+    <!-- QR Code Page (Portrait) -->
+    <div class="pdf-page qr-page">
+      <div class="qr-content">
+        <h3>User Data QR Code</h3>
+        <qr-code [value]="userData | json" [size]="150" class="qrcode"></qr-code>
+        <p class="qr-note">Scan to view details</p>
+      </div>
+    </div>
+  </div>

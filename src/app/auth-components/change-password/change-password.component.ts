@@ -92,7 +92,7 @@ async changePassword() {
   }
 }
 
-  private passwordsMatchValidator(
+  passwordsMatchValidator(
     formGroup: AbstractControl
   ): { [key: string]: any } | null {
     const password = formGroup.get('password')?.value;

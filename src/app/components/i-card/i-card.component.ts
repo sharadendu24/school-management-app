@@ -7,11 +7,13 @@ import { CommonModule, DatePipe, NgIf } from '@angular/common';
 import { QrCodeComponent } from 'ng-qrcode';
 import { baseUrl } from '../../constants/urls';
 import {NgxPrintModule} from 'ngx-print';
+import { IdCardPdfComponent } from "../id-card-pdf/id-card-pdf.component";
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-i-card',
   providers:[DatePipe],
-  imports: [InputTextModule, FormsModule, NgIf, QrCodeComponent, CommonModule, NgxPrintModule ],
+  imports: [InputTextModule, FormsModule, NgIf, QrCodeComponent, CommonModule, NgxPrintModule, IdCardPdfComponent],
   templateUrl: './i-card.component.html',
   styleUrl: './i-card.component.scss'
 })
@@ -22,6 +24,7 @@ export class ICardComponent implements OnInit{
   error: string | null = null;
 
 
+  showPDFPrint=false;
   
 
   constructor(private http: HttpClient) { }
@@ -56,7 +59,10 @@ export class ICardComponent implements OnInit{
   }
 
   printCard(cardId: string) {
-    window.print();
+    this.showPDFPrint=true;
+    timer(5000).subscribe(() => {
+      this.showPDFPrint=false;
+    });
 
     //Still have to complete the print logic............
   }
